@@ -17,7 +17,7 @@
         <form method="GET" class="d-flex align-items-center gap-2 mb-3">
             <label for="status" class="form-label m-0 me-2 fw-semibold">Status Filter:</label>
 
-            <select name="status[]" class="form-select w-auto" multiple>
+            <select name="status[]" id="status" class="form-select w-auto" multiple>
                 @foreach(['Upcoming', 'Overdue', 'Completed', 'Not Interested'] as $status)
                     <option value="{{ $status }}" {{ in_array($status, (array) request('status'), true) ? 'selected' : '' }}>
                         {{ $status }}
@@ -28,6 +28,24 @@
             <button type="submit" class="btn btn-primary">Filter</button>
         </form>
     </div>
+    <!-- Include Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Include jQuery (required for Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#status').select2({
+                placeholder: "Select Status",
+                allowClear: true,
+                width: '400px' // or 'resolve' to auto adjust width
+            });
+        });
+    </script>
+
 
 
     <table class="table table-bordered table-hover">

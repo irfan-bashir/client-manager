@@ -32,6 +32,11 @@
         @error('address') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
+    <div class="mb-3">
+        <label for="location_url" class="form-label fw-semibold">Location URL</label>
+        <input type="url" class="form-control" id="location_url" name="location_url" value="{{ old('location_url', $client->location_url ?? '') }}" placeholder="Enter Google Maps or any location URL">
+    </div>
+
     <div class="form-group">
         <label for="company_type">Company Type<span class="text-danger">*</span></label>
         <select name="company_type" id="company_type" class="form-control" required>

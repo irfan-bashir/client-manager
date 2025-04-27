@@ -22,7 +22,14 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:clients,email|max:255',
+            'location_url' => 'nullable|url|max:500',
+            'poc_name' => 'required|string|max:255',
+        ]);
         Client::create($request->except('_token'));
+
         return redirect()->route('clients.index')->with('success', 'Client created successfully.');
     }
 
@@ -40,6 +47,13 @@ class ClientController extends Controller
 
     public function update(Request $request, Client $client)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:clients,email|max:255',
+            'location_url' => 'nullable|url|max:500',
+            'poc_name' => 'required|string|max:255',
+        ]);
+
         $client->update($request->except('_token'));
         return redirect()->route('clients.index')->with('success', 'Client updated successfully.');
     }

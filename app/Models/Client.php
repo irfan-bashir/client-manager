@@ -18,6 +18,7 @@ class Client extends Model
         'city',
         'address',
         'is_active',
+        'location_url'
     ];
 
     public function registrations()
