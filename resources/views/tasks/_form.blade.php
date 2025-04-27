@@ -1,15 +1,15 @@
 <div class="mb-3">
-    <label class="form-label">Organization Name</label>
+    <label class="form-label">Organization Name<span class="text-danger">*</span></label>
     <select name="organization_name" class="form-control" required>
         <option value="">Select</option>
-        @foreach(['SECP / CEO', 'FBR', 'PTA', 'PEC', 'Department of Tourism', 'IPO', 'PSEB', 'Other', 'KPRA', 'SRA', 'PRA', 'BRA', 'SECP / Director', 'SECP/ Next of Kin'] as $org)
+        @foreach(['BRA', 'Department of Tourism', 'FBR', 'IPO', 'KPRA', 'Other', 'PEC', 'PRA', 'PTA', 'PSEB', 'SECP / CEO', 'SECP / Director', 'SECP/ Next of Kin', 'SRA'] as $org)
             <option value="{{ $org }}" {{ old('organization_name', $task->organization_name ?? '') === $org ? 'selected' : '' }}>{{ $org }}</option>
         @endforeach
     </select>
 </div>
 
 <div class="form-group mb-2">
-    <label>Form Name</label>
+    <label>Form Name<span class="text-danger">*</span></label>
     <input type="text" name="form_name" class="form-control" value="{{ old('form_name', $task->form_name ?? '') }}" required>
 </div>
 
@@ -19,12 +19,12 @@
 </div>
 
 <div class="form-group mb-2">
-    <label>Renewal Date</label>
+    <label>Renewal Date<span class="text-danger">*</span></label>
     <input type="date" name="renewal_date" class="form-control" value="{{ old('renewal_date', $task->renewal_date ?? '') }}" required>
 </div>
 
 <div class="form-group mb-2">
-    <label>Status</label>
+    <label>Status<span class="text-danger">*</span></label>
     <select name="status" class="form-control" required>
         @foreach(['Completed', 'Overdue', 'Upcoming', 'Not Interested'] as $status)
             <option value="{{ $status }}" {{ (old('status', $task->status ?? '') == $status) ? 'selected' : '' }}>{{ $status }}</option>

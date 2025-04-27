@@ -15,7 +15,7 @@ class SendTaskReminders extends Command
 
     public function handle()
     {
-        $upcoming = Carbon::now()->addDays(3)->startOfDay();
+        $upcoming = Carbon::now()->addDays(14)->startOfDay();
         $tasks = Task::whereDate('renewal_date', $upcoming)
             ->where('send_reminder', true)
             ->get();

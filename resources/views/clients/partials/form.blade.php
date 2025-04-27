@@ -3,26 +3,26 @@
     @if(isset($client)) @method('PUT') @endif
 
     <div class="mb-3">
-        <label>Name</label>
+        <label>Name<span class="text-danger">*</span></label>
         <input type="text" name="name" class="form-control" value="{{ old('name', $client->name ?? '') }}" required>
         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="mb-3">
-        <label>Email</label>
+        <label>Email<span class="text-danger">*</span></label>
         <input type="email" name="email" class="form-control" value="{{ old('email', $client->email ?? '') }}" required>
         @error('email') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="mb-3">
-        <label>Phone</label>
-        <input type="text" name="phone" class="form-control" value="{{ old('phone', $client->phone ?? '') }}">
+        <label>Phone<span class="text-danger">*</span></label>
+        <input type="text" name="phone" class="form-control" value="{{ old('phone', $client->phone ?? '') }}" required>
         @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="mb-3">
-        <label>POC Name</label>
-        <input type="text" name="poc_name" class="form-control" value="{{ old('poc_name', $client->poc_name ?? '') }}">
+        <label>POC Name<span class="text-danger">*</span></label>
+        <input type="text" name="poc_name" class="form-control" value="{{ old('poc_name', $client->poc_name ?? '') }}" required>
         @error('poc_name') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
@@ -33,7 +33,7 @@
     </div>
 
     <div class="form-group">
-        <label for="company_type">Company Type</label>
+        <label for="company_type">Company Type<span class="text-danger">*</span></label>
         <select name="company_type" id="company_type" class="form-control" required>
             <option value="">-- Select Company Type --</option>
             @foreach ([
@@ -50,7 +50,7 @@
 
     <div class="form-group">
         <label for="city">City</label>
-        <select name="city" id="city" class="form-control" required>
+        <select name="city" id="city" class="form-control">
             <option value="">-- Select City --</option>
             @foreach ([
                 'Islamabad','Karachi','Lahore','Faisalabad','Rawalpindi','Multan','Gujranwala',

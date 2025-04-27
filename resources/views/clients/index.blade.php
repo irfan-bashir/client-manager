@@ -4,7 +4,6 @@
     <div class="container">
         <h2>Clients</h2>
 
-{{--        <a href="{{ route('clients.create') }}" class="btn btn-primary mb-3">Add New Client</a>--}}
         <button class="btn btn-primary mb-3" onclick="openClientModal('{{ route('clients.create') }}', 'Add Client')">Add Client</button>
 
 
@@ -15,6 +14,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
+                <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
@@ -24,12 +24,11 @@
             <tbody>
             @forelse($clients as $client)
                 <tr>
+                    <td>{{ ($clients->currentPage() - 1) * $clients->perPage() + $loop->iteration }}</td>
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
                     <td>{{ $client->phone }}</td>
                     <td>
-{{--                        <a href="{{ route('clients.show', $client) }}" class="btn btn-sm btn-info">View</a>--}}
-{{--                        <a href="{{ route('clients.edit', $client) }}" class="btn btn-sm btn-warning">Edit</a>--}}
                                 <button class="btn btn-sm btn-info" onclick="openClientModal('{{ route('clients.show', $client) }}', 'View Client')">View</button>
                                 <button class="btn btn-sm btn-warning" onclick="openClientModal('{{ route('clients.edit', $client) }}', 'Edit Client')">Edit</button>
                         <a href="{{ route('clients.pdf', $client->id) }}" class="btn btn-sm btn-secondary">PDF</a>
@@ -47,39 +46,9 @@
             @endforelse
             </tbody>
         </table>
-
-        {{ $clients->links() }}
+        <div class="mt-3">
+            {{ $clients->links('pagination::bootstrap-5') }}
+        </div>
     </div>
-
-
-{{--    <script>--}}
-{{--        function openClientModal(url, title = 'Client') {--}}
-{{--            fetch(url)--}}
-{{--                .then(response => response.text())--}}
-{{--                .then(html => {--}}
-{{--                    document.getElementById('clientModalLabel').innerText = title;--}}
-{{--                    document.getElementById('clientModalContent').innerHTML = html;--}}
-
-{{--                    const isViewMode = title.toLowerCase().includes('view');--}}
-{{--                    const footer = document.getElementById('clientModalFooter');--}}
-{{--                    footer.innerHTML = isViewMode--}}
-{{--                        ? ''--}}
-{{--                        : `<button type="button" class="btn btn-success" id="modalSaveButton">Save</button>`;--}}
-{{--                    const modal = new bootstrap.Modal(document.getElementById('clientModal'));--}}
-{{--                    modal.show();--}}
-
-
-
-{{--                    // Attach click event to modal Save button--}}
-{{--                    document.getElementById('modalSaveButton').onclick = function () {--}}
-{{--                        const form = document.querySelector('#clientModalContent form');--}}
-{{--                        if (form) {--}}
-{{--                            form.submit(); // Submit the form--}}
-{{--                        }--}}
-{{--                    };--}}
-{{--                });--}}
-{{--        }--}}
-{{--    </script>--}}
-
 
 @endsection

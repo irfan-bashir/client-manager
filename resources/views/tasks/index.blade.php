@@ -26,6 +26,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th>#</th>
                     <th>Organization</th>
                     <th>Form</th>
                     <th>Description</th>
@@ -38,6 +39,7 @@
                 <tbody>
                 @foreach($tasks as $task)
                     <tr>
+                        <td>{{ ($tasks->currentPage() - 1) * $tasks->perPage() + $loop->iteration }}</td>
                         <td>{{ $task->organization_name }}</td>
                         <td>{{ $task->form_name }}</td>
                         <td>{{ $task->description }}</td>
@@ -76,6 +78,10 @@
                 @endforeach
                 </tbody>
             </table>
+            <div class="mt-3">
+                {{ $tasks->links('pagination::bootstrap-5') }}
+            </div>
+    </div>
         @endif
     </div>
 

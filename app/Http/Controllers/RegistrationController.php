@@ -9,7 +9,7 @@ class RegistrationController extends Controller
 {
     public function index(Client $client)
     {
-        $registrations = $client->registrations()->latest()->get();
+        $registrations = $client->registrations()->latest()->paginate(10);
         return view('registrations.index', compact('client', 'registrations'));
     }
 
@@ -75,18 +75,20 @@ class RegistrationController extends Controller
     private function getOrganizations()
     {
         return collect([
-            'SECP /CEO',
-            'FBR',
-            'PTA',
-            'PEC',
-            'Department of Tourism',
-            'IPO',
-            'PSEB',
-            'Other',
-            'KPRA',
-            'SRA',
-            'PRA',
             'BRA',
+            'Department of Tourism',
+            'FBR',
+            'IPO',
+            'KPRA',
+            'Other',
+            'PEC',
+            'PRA',
+            'PTA',
+            'PSEB',
+            'SECP / CEO',
+            'SECP / Director',
+            'SECP/ Next of Kin',
+            'SRA'
         ])->sort()->values();
     }
 }

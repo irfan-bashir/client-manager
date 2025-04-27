@@ -13,6 +13,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th>#</th>
                     <th>Organization</th>
                     <th>Username</th>
                     <th>Password</th>
@@ -23,6 +24,7 @@
                 <tbody>
                 @foreach($registrations as $registration)
                     <tr>
+                        <td>{{ ($registrations->currentPage() - 1) * $registrations->perPage() + $loop->iteration }}</td>
                         <td>{{ $registration->organization_name }}</td>
                         <td>{{ $registration->username }}</td>
                         <td>{{ $registration->password }}</td>
@@ -50,7 +52,7 @@
                                         @include('registrations._form', ['registration' => $registration])
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -59,6 +61,10 @@
                 @endforeach
                 </tbody>
             </table>
+            <div class="mt-3">
+                {{ $registrations->links('pagination::bootstrap-5') }}
+            </div>
+    </div>
         @endif
     </div>
 

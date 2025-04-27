@@ -35,8 +35,9 @@
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
         <tr>
+            <th>#</th>
             <th>Client</th>
-            <th>Org</th>
+            <th>Organization Name</th>
             <th>Form</th>
             <th>Description</th>
             <th>Renewal Date</th>
@@ -47,7 +48,8 @@
         <tbody>
         @forelse($tasks as $task)
             <tr>
-                <td>{{ $task->registration->client->name ?? '' }}</td>
+                <td>{{ ($tasks->currentPage() - 1) * $tasks->perPage() + $loop->iteration }}</td>
+                <td>{{ $task->client->name ?? '' }}</td>
                 <td>{{ $task->organization_name }}</td>
                 <td>{{ $task->form_name }}</td>
                 <td>{{ $task->description }}</td>
@@ -72,7 +74,7 @@
 
                     <form method="POST" action="{{ route('renewals.generateWhatsapp', $task) }}">
                         @csrf
-                        <button type="button" class="btn btn-sm btn-success" onclick="showWhatsappMessage({{ $task->id }})">WhatsApp</button>
+                        <button type="button" class="btn btn-sm btn-success" onclick="showWhatsappMessage({{ $task->id }})">WhatsApp Preview</button>
                     </form>
                 </td>
             </tr>
@@ -83,6 +85,10 @@
         @endforelse
         </tbody>
     </table>
+    <div class="mt-3">
+        {{ $tasks->links('pagination::bootstrap-5') }}
+    </div>
+    </div>
     <!-- WhatsApp Message Modal -->
     <div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

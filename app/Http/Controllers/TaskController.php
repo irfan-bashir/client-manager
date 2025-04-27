@@ -10,7 +10,7 @@ class TaskController extends Controller
 {
     public function index(Client $client)
     {
-        $tasks = $client->tasks()->latest()->get();
+        $tasks = $client->tasks()->latest()->paginate(10);
         return view('tasks.index', compact('client', 'tasks'));
     }
 

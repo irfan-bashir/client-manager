@@ -16,7 +16,7 @@ class RenewalController extends Controller
         $tasks = Task::with('registration.client')
             ->whereIn('status', $statusFilter)
             ->orderBy('renewal_date')
-            ->get();
+            ->paginate(10);
 
         return view('renewals.index', compact('tasks', 'statusFilter'));
     }
