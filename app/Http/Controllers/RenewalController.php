@@ -30,20 +30,23 @@ class RenewalController extends Controller
 
     public function generateWhatsapp(Task $task)
     {
-        $message = "Subject: Reminder - Pending Form Submission\n" .
-            "Dear {$task->client->poc_name},\n" .
+        $formattedDate = \Carbon\Carbon::parse($task->renewal_date)->format('jS F Y');
+        $statusWithIcon = $task->status === 'Overdue' ? '⚠️ ' . $task->status : $task->status;
+
+        $message = "*Subject: Reminder - Pending Form Submission*\n\n" .
+            "Dear *{$task->client->poc_name}*,\n\n" .
             "I hope you are doing well. This is a gentle reminder regarding the following pending form that requires your attention:\n\n" .
-            "Organization Name: {$task->organization_name}\n" .
-            "Form Name: {$task->form_name}\n" .
-            "Description: {$task->description}\n" .
-            "Renewal Date: " . \Carbon\Carbon::parse($task->renewal_date)->format('jS F Y') . "\n" .
-            "Status: {$task->status}\n\n" .
-            "Action Required:\n" .
-            "Please ensure the form is completed at your earliest convenience to avoid any delays or penalties.\n" .
-            "If the form has already been submitted, you may disregard this message.\n\n" .
-            "For any questions or support, feel free to contact us at sales.abcosnultants@gmail.com or 0336 5573186.\n\n" .
-            "Thank you for your prompt attention.\n" .
-            "Best regards,\n" .
+            "*Organization Name:* {$task->organization_name}\n" .
+            "*Form Name:* {$task->form_name}\n" .
+            "*Description:* {$task->description}\n" .
+            "*Renewal Date:* {$formattedDate}\n" .
+            "*Status:* {$statusWithIcon}\n\n" .
+            "*Action Required:*\n" .
+            "• Please ensure the form is completed at your earliest convenience to avoid any delays or penalties.\n" .
+            "• If the form has already been submitted, you may disregard this message.\n\n" .
+            "For any questions or support, feel free to contact us at *sales.abconsultants@gmail.com* or *0336 5573186*.\n\n" .
+            "Thank you for your prompt attention.\n\n" .
+            "*Best regards*,\n" .
             "AB Consultants";
 
         return response()->json(['message' => $message]);

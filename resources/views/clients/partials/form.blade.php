@@ -33,7 +33,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="location_url" class="form-label fw-semibold">Location URL</label>
+        <label for="location_url" class="form-label">Location URL</label>
         <input type="url" class="form-control" id="location_url" name="location_url" value="{{ old('location_url', $client->location_url ?? '') }}" placeholder="Enter Google Maps or any location URL">
     </div>
 

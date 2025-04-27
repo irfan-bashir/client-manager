@@ -114,11 +114,30 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <pre id="whatsappMessageContent"></pre>
+                    <div id="whatsappMessageContent" class="whatsapp-message-preview"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="copyToClipboard()">Copy Message</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .whatsapp-message-preview {
+            white-space: pre-wrap;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .whatsapp-message-preview b {
+            font-weight: 600;
+        }
+    </style>
+
     <script>
         function showWhatsappMessage(taskId) {
             fetch(`/renewals/${taskId}/generate-whatsapp`, {
@@ -130,10 +149,22 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('whatsappMessageContent').textContent = data.message;
+                    // Convert WhatsApp formatting (*bold*) to HTML <b> tags for display
+                    const formattedMessage = data.message
+                        .replace(/\*(.*?)\*/g, '<b>$1</b>')
+                        .replace(/•/g, '•');
+
+                    document.getElementById('whatsappMessageContent').innerHTML = formattedMessage;
                     new bootstrap.Modal(document.getElementById('whatsappModal')).show();
                 })
                 .catch(error => console.error('Error:', error));
+        }
+
+        function copyToClipboard() {
+            const content = document.getElementById('whatsappMessageContent').textContent;
+            navigator.clipboard.writeText(content)
+                .then(() => alert('Message copied to clipboard!'))
+                .catch(err => console.error('Failed to copy: ', err));
         }
     </script>
 

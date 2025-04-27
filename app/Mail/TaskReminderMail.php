@@ -19,7 +19,7 @@ class TaskReminderMail extends Mailable
         $this->task = $task;
 
         $this->messageText = "Subject: Reminder - Pending Form Submission\n" .
-            "Dear [POC Name],\n" .
+            "Dear {$task->client->poc_name},\n" .
             "I hope you are doing well. This is a gentle reminder regarding the following pending form that requires your attention:\n\n" .
             "Organization Name: {$task->organization_name}\n" .
             "Form Name: {$task->form_name}\n" .
