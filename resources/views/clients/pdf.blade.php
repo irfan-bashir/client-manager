@@ -133,11 +133,16 @@
                             <td>{{ $task->organization_name }}</td>
                             <td>{{ $task->form_name }}</td>
                             <td>
-                                    <span class="badge
-                                        {{ $task->status === 'Completed' ? 'bg-success' :
-                                           ($task->status === 'Overdue' ? 'bg-danger' : 'bg-warning') }}">
-                                        {{ $task->status }}
-                                    </span>
+                                @php
+                                    $color = match($task->status) {
+                                        'Completed' => 'success',  // green
+                                        'Overdue' => 'danger',      // red
+                                        'Upcoming' => 'primary',    // blue
+                                        'Not Interested' => 'secondary', // grey
+                                        default => 'dark',
+                                    };
+                                @endphp
+                                <span class="badge bg-{{ $color }}">{{ $task->status }}</span>
                             </td>
                             <td>{{ \Carbon\Carbon::parse($task->renewal_date)->format('d M Y') }}</td>
                         </tr>

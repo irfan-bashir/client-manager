@@ -17,8 +17,7 @@
         <form method="GET" class="d-flex align-items-center gap-2 mb-3">
             <label for="status" class="form-label m-0 me-2 fw-semibold">Status Filter:</label>
 
-            <select name="status[]" class="form-select w-auto">
-                <option value="">-- Select Status --</option>
+            <select name="status[]" class="form-select w-auto" multiple>
                 @foreach(['Upcoming', 'Overdue', 'Completed', 'Not Interested'] as $status)
                     <option value="{{ $status }}" {{ in_array($status, (array) request('status'), true) ? 'selected' : '' }}>
                         {{ $status }}
@@ -28,9 +27,8 @@
 
             <button type="submit" class="btn btn-primary">Filter</button>
         </form>
-
-
     </div>
+
 
     <table class="table table-bordered table-hover">
         <thead class="table-dark">

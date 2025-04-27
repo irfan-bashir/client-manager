@@ -44,7 +44,18 @@
                         <td>{{ $task->form_name }}</td>
                         <td>{{ $task->description }}</td>
                         <td>{{ $task->renewal_date }}</td>
-                        <td>{{ $task->status }}</td>
+                        <td>
+                            @php
+                                $color = match($task->status) {
+                                    'Completed' => 'success',  // green
+                                    'Overdue' => 'danger',      // red
+                                    'Upcoming' => 'primary',    // blue
+                                    'Not Interested' => 'secondary', // grey
+                                    default => 'dark',
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $color }}">{{ $task->status }}</span>
+                        </td>
                         <td>{{ $task->send_reminder ? 'Yes' : 'No' }}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $task->id }}">Edit</button>
