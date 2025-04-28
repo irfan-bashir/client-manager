@@ -45,22 +45,57 @@
                     <td>{{ $client->city }}</td>
                     <td>{{ $client->address }}</td>
                     <td>
-                        <button class="btn btn-sm btn-info" onclick="openClientModal('{{ route('clients.show', $client) }}', 'View Client')">View</button>
-                        <button class="btn btn-sm btn-warning" onclick="openClientModal('{{ route('clients.edit', $client) }}', 'Edit Client')">Edit</button>
-                        <a href="{{ route('clients.pdf', $client->id) }}" class="btn btn-sm btn-secondary">PDF</a>
-                        <a href="{{ route('tasks.index', $client->id) }}" class="btn btn-sm btn-outline-dark">Tasks</a>
-                        <a href="{{ route('registrations.index', $client->id) }}" class="btn btn-sm btn-success">Registrations</a>
-                        @if($client->location_url)
-                            <a href="{{ $client->location_url }}" class="btn btn-sm btn-info" target="_blank" title="View Location">
-                                <i class="fa fa-map-marker-alt"></i> Map
-                            </a>
-                        @endif
-                        <form action="{{ route('clients.destroy', $client) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this client?')">Delete</button>
-                        </form>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="openClientModal('{{ route('clients.show', $client) }}', 'View Client')">
+                                        <i class="fas fa-eye me-2"></i> View
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="openClientModal('{{ route('clients.edit', $client) }}', 'Edit Client')">
+                                        <i class="fas fa-edit me-2"></i> Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('clients.pdf', $client->id) }}" target="_blank">
+                                        <i class="fas fa-file-pdf me-2"></i> PDF
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('tasks.index', $client->id) }}">
+                                        <i class="fas fa-tasks me-2"></i> Tasks
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('registrations.index', $client->id) }}">
+                                        <i class="fas fa-clipboard-list me-2"></i> Registrations
+                                    </a>
+                                </li>
+                                @if($client->location_url)
+                                    <li>
+                                        <a class="dropdown-item" href="{{ $client->location_url }}" target="_blank">
+                                            <i class="fas fa-map-marker-alt me-2"></i> Map
+                                        </a>
+                                    </li>
+                                @endif
+                                <li>
+                                    <form action="{{ route('clients.destroy', $client) }}" method="POST" onsubmit="return confirm('Delete this client?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="dropdown-item text-danger" type="submit">
+                                            <i class="fas fa-trash-alt me-2"></i> Delete
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </td>
+
                 </tr>
             @empty
                 <tr><td colspan="4">No clients found.</td></tr>

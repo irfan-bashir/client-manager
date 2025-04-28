@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>{{ config('app.name', 'AB Consultants') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://abconsultants.pk/wp-content/uploads/2023/10/Untitled-1-2-e1698391157747.png">
 
     {{-- Bootstrap 5 --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">

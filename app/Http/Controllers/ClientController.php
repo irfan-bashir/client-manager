@@ -49,7 +49,7 @@ class ClientController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:clients,email|max:255',
+            'email' => 'nullable|email|unique:clients,email,'.$client->id.'|max:255',
             'location_url' => 'nullable|url|max:500',
             'poc_name' => 'required|string|max:255',
         ]);
