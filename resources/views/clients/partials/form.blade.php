@@ -1,4 +1,6 @@
-<form method="POST" action="{{ isset($client) ? route('clients.update', $client) : route('clients.store') }}">
+{{--<form method="POST" action="{{ isset($client) ? route('clients.update', $client) : route('clients.store') }}">--}}
+{{--<form id="client" method="POST" action="{{ isset($client) ? route('clients.update', $client) : route('clients.store') }}">--}}
+
     @csrf
     @if(isset($client)) @method('PUT') @endif
 
@@ -72,4 +74,4 @@
         <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
-</form>
+{{--</form>--}}

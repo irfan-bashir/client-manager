@@ -7,6 +7,7 @@
         <!-- Add Button -->
         <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addRegistrationModal">Add Registration</button>
 
+
         @if($registrations->isEmpty())
             <p>No registrations found.</p>
         @else

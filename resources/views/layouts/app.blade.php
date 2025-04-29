@@ -13,11 +13,17 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Optional: Better Bootstrap look -->
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.1.1/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swapp" rel="stylesheet">
+
+
 
 
     <style>
         body {
             background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
         }
         .sidebar {
             height: 100vh;
@@ -104,9 +110,7 @@
             <div id="collapseClients" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
                 <div class="accordion-body p-0">
 {{--                    <a href="{{ route('clients.create') }}" class="d-block px-4 py-2">Add Client</a>--}}
-                    <a href="javascript:void(0)"
-                       onclick="openClientModal('{{ route('clients.create') }}', 'Add Client')"
-                       class="d-block px-4 py-2">
+                    <a href="{{ route('clients.create') }}" class="d-block px-4 py-2">
                         Add Client
                     </a>
                     <a href="{{ route('clients.index') }}" class="d-block px-4 py-2">
@@ -199,7 +203,7 @@
     });
 </script>
 <script>
-    function openClientModal(url, title = 'Client') {
+    function openClientModal(url, title = '') {
         fetch(url)
             .then(response => response.text())
             .then(html => {

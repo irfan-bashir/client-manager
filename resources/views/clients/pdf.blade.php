@@ -1,190 +1,231 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Client Details</title>
+    <meta charset="utf-8">
+    <title>Client Report</title>
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 40px;
+            font-size: 13px;
+            color: #2c2c2c;
         }
-        h1, h2 {
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .header .logo {
+            width: 120px;
+        }
+
+        .header .company-info {
+            text-align: right;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        h1 {
             text-align: center;
+            margin-bottom: 25px;
+            font-size: 20px;
+            color: #007bff;
+            text-transform: uppercase;
         }
-        .container {
-            margin: 20px;
-        }
-        .card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            padding: 15px;
-        }
-        .card-header {
+
+        .section-title {
             background-color: #007bff;
             color: white;
-            padding: 10px;
-            font-size: 18px;
-            border-radius: 8px 8px 0 0;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center; /* Centered the title */
         }
-        .card-body {
-            padding: 15px;
-        }
-        .row {
+
+        .info-grid {
             display: flex;
             flex-wrap: wrap;
-        }
-        .col-md-6 {
-            width: 48%;
-            margin-right: 2%;
-        }
-        .col-md-6:last-child {
-            margin-right: 0;
-        }
-        .mb-3 {
             margin-bottom: 15px;
         }
+
+        .info-item {
+            width: 48%;
+            margin-right: 4%;
+            margin-bottom: 10px;
+        }
+
+        .info-item:nth-child(2n) {
+            margin-right: 0;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #444;
+        }
+
+        .value {
+            margin-left: 5px;
+        }
+
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 10px;
         }
+
         .table th, .table td {
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 8px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            vertical-align: top;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+            color: #333;
             text-align: left;
         }
-        .table th {
-            background-color: #f8f9fa;
-        }
+
         .badge {
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-            font-size: 12px;
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 11px;
         }
+
         .bg-success { background-color: #28a745; }
         .bg-danger { background-color: #dc3545; }
-        .bg-warning { background-color: #ffc107; }
+        .bg-warning { background-color: #ffc107; color: #212529; }
+        .bg-primary { background-color: #007bff; }
+        .bg-secondary { background-color: #6c757d; }
+        .bg-dark { background-color: #343a40; }
+
+        .footer {
+            position: fixed;
+            bottom: -30px;
+            left: 0;
+            right: 0;
+            height: 30px;
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>{{ $client->name }} - Details</h1>
-
-    <!-- Client Information Card -->
-    <div class="card">
-        <div class="card-header">
-            <h4>Client Information</h4>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <strong>Name:</strong> {{ $client->name }}
-                    </div>
-                    <div class="mb-3">
-                        <strong>Email:</strong> {{ $client->email }}
-                    </div>
-                    <div class="mb-3">
-                        <strong>Phone:</strong> {{ $client->phone }}
-                    </div>
-                    <div class="mb-3">
-                        <strong>POC Name:</strong> {{ $client->poc_name }}
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <strong>Address:</strong> {{ $client->address }}
-                    </div>
-                    <div class="mb-3">
-                        <strong>Company Type:</strong> {{ $client->company_type }}
-                    </div>
-                    <div class="mb-3">
-                        <strong>City:</strong> {{ $client->city }}
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="header">
+    <!--     <div class="logo">
+        <img src="{{ public_path('images/logo.png') }}" width="100">
+    </div> -->
+    <div class="company-info">
+        <div class="company-name">AB Consultants</div>
+        <div>www.abconsultants.com.pk</div>
+        <div>sales.abconsultants@gmail.com</div>
     </div>
+</div>
 
-    <!-- Tasks Section -->
-    <div class="card">
-        <div class="card-header">
-            <h4>Tasks</h4>
-        </div>
-        <div class="card-body">
-            @if($client->tasks->isEmpty())
-                <p>No tasks found for this client.</p>
-            @else
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Organization Name</th>
-                        <th>Form Name</th>
-                        <th>Status</th>
-                        <th>Renewal Date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($client->tasks as $task)
-                        <tr>
-                            <td>{{ $task->organization_name }}</td>
-                            <td>{{ $task->form_name }}</td>
-                            <td>
-                                @php
-                                    $color = match($task->status) {
-                                        'Completed' => 'success',  // green
-                                        'Overdue' => 'danger',      // red
-                                        'Upcoming' => 'primary',    // blue
-                                        'Not Interested' => 'secondary', // grey
-                                        default => 'dark',
-                                    };
-                                @endphp
-                                <span class="badge bg-{{ $color }}">{{ $task->status }}</span>
-                            </td>
-                            <td>{{ \Carbon\Carbon::parse($task->renewal_date)->format('d M Y') }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            @endif
-        </div>
-    </div>
+<h1>Client Report: {{ $client->name }}</h1>
 
-    <!-- Registrations Section -->
-    <div class="card">
-        <div class="card-header">
-            <h4>Registrations</h4>
-        </div>
-        <div class="card-body">
-            @if($client->registrations->isEmpty())
-                <p>No registrations found for this client.</p>
-            @else
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Organization</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Pin</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($client->registrations as $registration)
-                        <tr>
-                            <td>{{ $registration->organization_name }}</td>
-                            <td>{{ $registration->username }}</td>
-                            <td>{{ $registration->password }}</td>
-                            <td>{{ $registration->pin }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            @endif
-        </div>
+<!-- Basic Information -->
+<div class="section-title" style="margin-bottom: 10px;">Basic Information</div>
+<div class="info-grid" style="margin-bottom: 20px;">
+    <div class="info-item"><span class="label">Client Name:</span> <span class="value">{{ $client->name }}</span></div>
+    <div class="info-item"><span class="label">Company Type:</span> <span class="value">{{ $client->company_type }}</span></div>
+    <div class="info-item"><span class="label">POC Name:</span> <span class="value">{{ $client->poc_name }}</span></div>
+    <div class="info-item"><span class="label">Contact Number:</span> <span class="value">{{ $client->phone }}</span></div>
+    <div class="info-item"><span class="label">Email:</span> <span class="value">{{ $client->email }}</span></div>
+    <div class="info-item"><span class="label">Address:</span> <span class="value">{{ $client->address }}</span></div>
+    <div class="info-item" style="white-space: nowrap;">
+        <span class="label" style="margin-right: 5px;">Location URL:</span>
+        <a href="{{ $client->location_url }}" target="_blank" style="text-decoration: none; color: #007bff;">{{ $client->location_url }}</a>
     </div>
+    <div class="info-item"><span class="label">City:</span> <span class="value">{{ $client->city }}</span></div>
+</div>
+
+<!-- Registrations -->
+@if($client->registrations->isNotEmpty())
+    <div class="section-title">Registrations</div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Sr No.</th>
+            <th>Organization</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Pin</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($client->registrations as $registration)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $registration->organization_name }}</td>
+                <td>{{ $registration->username }}</td>
+                <td>{{ $registration->password }}</td>
+                <td>{{ $registration->pin }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+@else
+    <p>No registrations found for this client.</p>
+@endif
+
+<!-- Tasks -->
+@if($client->tasks->isNotEmpty())
+    <div class="section-title">Tasks</div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Sr No.</th>
+            <th>Organization</th>
+            <th>Form Name</th>
+            <th>Description</th>
+            <th>Renewal Date</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($client->tasks as $task)
+            @php
+                $color = match($task->status) {
+                    'Completed' => 'success',
+                    'Overdue' => 'danger',
+                    'Upcoming' => 'primary',
+                    'Not Interested' => 'secondary',
+                    default => 'dark',
+                };
+            @endphp
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $task->organization_name }}</td>
+                <td>{{ $task->form_name }}</td>
+                <td>{{ $task->description }}</td>
+                <td>{{ \Carbon\Carbon::parse($task->renewal_date)->format('jS F Y') }}</td>  <!-- Updated date format -->
+                <td><span class="badge bg-{{ $color }}">{{ $task->status }}</span></td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+@else
+    <p>No tasks found for this client.</p>
+@endif
+
+<!-- Footer -->
+<div class="footer">
+    © {{ now()->year }} AB Consultants — Confidential Report
 </div>
 
 </body>

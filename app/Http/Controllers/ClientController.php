@@ -16,8 +16,10 @@ class ClientController extends Controller
 
     public function create()
     {
-        $html = view('clients.partials.form')->with(['client' => null])->render();
-        return response($html);
+        return view('clients.create_full');
+
+//        $html = view('clients.partials.form')->with(['client' => null])->render();
+//        return response($html);
     }
 
     public function store(Request $request)
@@ -28,21 +30,29 @@ class ClientController extends Controller
             'location_url' => 'nullable|url|max:500',
             'poc_name' => 'required|string|max:255',
         ]);
-        Client::create($request->except('_token'));
+        $client= Client::create($request->except('_token'));
 
-        return redirect()->route('clients.index')->with('success', 'Client created successfully.');
+        return redirect()
+            ->route('clients.edit', ['client' => $client->id, '#registrations'])
+            ->with('success', 'Client created successfully. Now you can add registrations.');
     }
 
     public function show(Client $client)
     {
+        $registrations = $client->registrations()->latest()->paginate(10);
+        $tasks = $client->tasks()->latest()->paginate(10);
+
+//        return view('clients.show', compact('client', 'registrations', 'tasks'));
         $html = view('clients.partials.show')->with(compact('client'))->render();
         return response($html);
     }
 
     public function edit(Client $client)
     {
-        $html = view('clients.partials.form')->with(compact('client'))->render();
-        return response($html);
+        $client->load(['registrations', 'tasks']);
+        return view('clients.edit_full', compact('client'));
+//        $html = view('clients.partials.form')->with(compact('client'))->render();
+//        return response($html);
     }
 
     public function update(Request $request, Client $client)

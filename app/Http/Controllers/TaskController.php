@@ -28,7 +28,11 @@ class TaskController extends Controller
         $validated['send_reminder'] = $request->has('send_reminder');
         $client->tasks()->create($validated);
 
-        return redirect()->route('tasks.index', $client)->with('success', 'Task added successfully.');
+        return redirect()
+            ->route('clients.edit', $client->id)
+            ->with('success', 'Task added successfully.')
+            ->withFragment('tasks');
+//        return redirect()->route('tasks.index', $client)->with('success', 'Task added successfully.');
     }
 
     public function update(Request $request, Client $client, Task $task)
@@ -44,8 +48,12 @@ class TaskController extends Controller
 
         $validated['send_reminder'] = $request->has('send_reminder');
         $task->update($validated);
+        return redirect()
+            ->route('clients.edit', $client->id)
+            ->with('success', 'Task updated successfully.')
+            ->withFragment('tasks');
 
-        return redirect()->route('tasks.index', $client)->with('success', 'Task updated successfully.');
+//        return redirect()->route('tasks.index', $client)->with('success', 'Task updated successfully.');
     }
 
     public function destroy(Client $client, Task $task)

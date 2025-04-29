@@ -91,7 +91,7 @@
                 'Kasur'
             ] as $city)
                 <option value="{{ $city }}"
-                    {{ old('city_id', $client->city_id ?? '') == $city ? 'selected' : '' }}>
+                    {{ old('city', $client->city_id ?? '') == $city ? 'selected' : '' }}>
                     {{ $city }}
                 </option>
             @endforeach

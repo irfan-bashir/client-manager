@@ -1,65 +1,6 @@
 <!-- client/_report.blade.php -->
-<style>
-    /* Updated with scoped styles */
-    #pdf-report-container {
-        font-family: 'Roboto', sans-serif;
-        font-size: 13px;
-        color: #2c2c2c;
-    }
-
-    #pdf-report-container .section-title {
-        background-color: #007bff;
-        color: white;
-        padding: 8px 12px;
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    #pdf-report-container .info-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    #pdf-report-container .info-item {
-        flex: 1 1 45%;
-    }
-
-    #pdf-report-container .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-
-    #pdf-report-container .table th,
-    #pdf-report-container .table td {
-        padding: 8px;
-        border: 1px solid #ccc;
-        font-size: 12px;
-    }
-
-    #pdf-report-container .table th {
-        background-color: #f2f2f2;
-        color: #333;
-    }
-
-    #pdf-report-container .badge {
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 11px;
-        color: white;
-    }
-
-    #pdf-report-container .bg-success { background-color: #28a745; }
-    #pdf-report-container .bg-danger { background-color: #dc3545; }
-    #pdf-report-container .bg-primary { background-color: #007bff; }
-    #pdf-report-container .bg-secondary { background-color: #6c757d; }
-    #pdf-report-container .bg-dark { background-color: #343a40; }
-</style>
-
-<div id="pdf-report-container">
+<div id="pdf-style-content">
+    <h1>Client Report: {{ $client->name }}</h1>
     <div class="section-title">Basic Information</div>
     <div class="info-grid">
         <div class="info-item"><span class="label">Client Name:</span> <span class="value">{{ $client->name }}</span></div>

@@ -2,33 +2,54 @@
 
 @section('content')
     <div class="container">
-        <h2>Client Details</h2>
+        <h2>Client: {{ $client->name }}</h2>
 
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Name:</strong> {{ $client->name }}</li>
-            <li class="list-group-item"><strong>Email:</strong> {{ $client->email }}</li>
-            <li class="list-group-item"><strong>Phone:</strong> {{ $client->phone }}</li>
-            <li class="list-group-item"><strong>POC Name:</strong> {{ $client->poc_name ?? 'N/A' }}</li>
-            <li class="list-group-item"><strong>Company Type:</strong> {{ $client->company_type }}</li>
-            <li class="list-group-item"><strong>Address:</strong> {{ $client->address }}</li>
-            <li class="list-group-item"><strong>City:</strong> {{ $client->city }}</li>
-
-            <!-- If you have additional fields in your database, add them here -->
-            @if($client->registration_number)
-                <li class="list-group-item"><strong>Registration Number:</strong> {{ $client->registration_number }}</li>
-            @endif
-
-            @if($client->ntn_number)
-                <li class="list-group-item"><strong>NTN Number:</strong> {{ $client->ntn_number }}</li>
-            @endif
-
-            @if($client->strn_number)
-                <li class="list-group-item"><strong>STRN Number:</strong> {{ $client->strn_number }}</li>
-            @endif
-
-            <!-- Add any other fields you have in your form -->
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="clientTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-tab-pane"
+                        type="button" role="tab">Client Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="registrations-tab" data-bs-toggle="tab"
+                        data-bs-target="#registrations-tab-pane" type="button" role="tab">Registrations</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tasks-tab" data-bs-toggle="tab"
+                        data-bs-target="#tasks-tab-pane" type="button" role="tab">Tasks</button>
+            </li>
         </ul>
 
-        <a href="{{ route('clients.index') }}" class="btn btn-primary mt-3">Back to Clients</a>
+        <div class="tab-content mt-4" id="clientTabsContent">
+            <!-- Client Info -->
+            <div class="tab-pane fade show active" id="info-tab-pane" role="tabpanel">
+                <p><strong>Email:</strong> {{ $client->email }}</p>
+                <p><strong>Phone:</strong> {{ $client->phone }}</p>
+                <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-primary">Edit Client</a>
+            </div>
+
+            <!-- Registrations Tab -->
+            <div class="tab-pane fade" id="registrations-tab-pane" role="tabpanel">
+                @include('clients.partials.registrations', ['client' => $client, 'registrations' => $registrations])
+            </div>
+
+            <!-- Tasks Tab -->
+            <div class="tab-pane fade" id="tasks-tab-pane" role="tabpanel">
+                @include('clients.partials.tasks', ['client' => $client, 'tasks' => $tasks])
+            </div>
+        </div>
     </div>
 @endsection
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const hash = window.location.hash;
+        if (hash) {
+            const tabTrigger = document.querySelector(`button[data-bs-target="${hash}"]`);
+            if (tabTrigger) {
+                const tab = new bootstrap.Tab(tabTrigger);
+                tab.show();
+            }
+        }
+    });
+</script>
+

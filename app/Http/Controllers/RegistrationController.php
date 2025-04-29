@@ -33,7 +33,11 @@ class RegistrationController extends Controller
 
 
         $client->registrations()->create($validated);
-        return redirect()->route('registrations.index', $client)->with('success', 'Registration added.');
+        return redirect()
+            ->route('clients.edit', $client->id)
+            ->with('success', 'Registration added successfully.')
+            ->withFragment('registrations');
+//        return redirect()->route('registrations.index', $client)->with('success', 'Registration added.');
     }
 
     public function edit(Client $client, Registration $registration)
@@ -57,7 +61,10 @@ class RegistrationController extends Controller
         ]);
 
         $registration->update($validated);
-        return redirect()->route('registrations.index', $client)->with('success', 'Registration updated.');
+        return redirect()
+            ->route('clients.edit', $client->id)
+            ->with('success', 'Registration updated successfully.')
+            ->withFragment('registrations');
     }
 
     public function destroy(Client $client, Registration $registration)
