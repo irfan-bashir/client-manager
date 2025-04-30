@@ -6,28 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="https://abconsultants.pk/wp-content/uploads/2023/10/Untitled-1-2-e1698391157747.png">
 
-    {{-- Bootstrap 5 --}}
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Select2 Styles -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <!-- Optional: Better Bootstrap look -->
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.1.1/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swapp" rel="stylesheet">
 
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-nx1nP4JxTwS8FF7gIwbAgKJ6A5p+qg0lT+FESXuX2iAYImnv+FjkaA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Add in your layouts/app.blade.php head -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 
 
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f9;
+            font-family: 'Inter', sans-serif;
             font-size: 14px;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .sidebar {
             height: 100vh;
-            background-color: #343a40;
+            background-color: #1f2937;
             padding-top: 1rem;
             color: white;
             position: fixed;
@@ -35,22 +43,35 @@
             left: 0;
             width: 250px;
             overflow-y: auto;
+            transition: all 0.3s;
         }
-        .sidebar a, .sidebar .accordion-button {
+        .sidebar a,
+        .sidebar .accordion-button {
             color: white;
-            background-color: #343a40;
+            background-color: #1f2937;
+            transition: background 0.2s ease;
         }
+        .sidebar a:hover,
         .sidebar .accordion-button:not(.collapsed),
         .sidebar .accordion-button:focus {
-            background-color: #495057;
+            background-color: #374151;
         }
-        .sidebar a:hover {
-            background-color: #495057;
+        .sidebar .accordion-body a {
+            padding-left: 2.5rem;
         }
         .main-content {
             margin-left: 250px;
             padding: 2rem;
             margin-top: 56px;
+        }
+        .accordion-button::after {
+            filter: brightness(0) invert(1);
+        }
+        .nav-link.dropdown-toggle {
+            color: white;
+        }
+        .modal-header, .modal-footer {
+            background-color: #f8f9fa;
         }
     </style>
 </head>
@@ -59,19 +80,19 @@
 <!-- Top Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">AB Consultants</a>
+        <a class="navbar-brand fw-bold" href="#"><i class="fa-solid fa-building-columns me-2"></i>AB Consultants</a>
         <div class="collapse navbar-collapse justify-content-end">
             @auth
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            {{ Auth::user()->name }}
+                            <i class="fa-solid fa-user me-1"></i>{{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button class="dropdown-item">Logout</button>
+                                    <button class="dropdown-item"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</button>
                                 </form>
                             </li>
                         </ul>
@@ -85,12 +106,11 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="accordion" id="sidebarAccordion">
-
         <!-- Dashboard Section -->
-        <div class="accordion-item bg-dark border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header" id="headingDashboard">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDashboard" aria-expanded="false">
-                    Dashboard
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDashboard">
+                    <i class="fa-solid fa-gauge me-2"></i>Dashboard
                 </button>
             </h2>
             <div id="collapseDashboard" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
@@ -101,25 +121,19 @@
         </div>
 
         <!-- Clients Section -->
-        <div class="accordion-item bg-dark border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header" id="headingClients">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClients" aria-expanded="false">
-                    Clients
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClients">
+                    <i class="fa-solid fa-users me-2"></i>Clients
                 </button>
             </h2>
             <div id="collapseClients" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
                 <div class="accordion-body p-0">
-{{--                    <a href="{{ route('clients.create') }}" class="d-block px-4 py-2">Add Client</a>--}}
-                    <a href="{{ route('clients.create') }}" class="d-block px-4 py-2">
-                        Add Client
-                    </a>
-                    <a href="{{ route('clients.index') }}" class="d-block px-4 py-2">
-                        Manage Clients
-                    </a>
+                    <a href="{{ route('clients.create') }}" class="d-block px-4 py-2">Add Client</a>
+                    <a href="{{ route('clients.index') }}" class="d-block px-4 py-2">Manage Clients</a>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -127,6 +141,7 @@
 <div class="main-content">
     @yield('content')
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -135,21 +150,13 @@
                 <h5 class="modal-title" id="clientModalLabel">Client</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="clientModalContent">
-                <!-- Dynamic Content Loaded Here -->
-            </div>
-            {{--                <div class="modal-footer">--}}
-            {{--                    <button type="button" class="btn btn-success" id="modalSaveButton">Save</button>--}}
-            {{--                </div>--}}
-            <div class="modal-footer" id="clientModalFooter">
-                <!-- Save button will be inserted dynamically here -->
-            </div>
+            <div class="modal-body" id="clientModalContent"></div>
+            <div class="modal-footer" id="clientModalFooter"></div>
         </div>
     </div>
 </div>
 
-
-<!-- jQuery and Select2 Script -->
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -158,14 +165,11 @@
         $('.select2-status').select2({
             theme: 'bootstrap-5',
             placeholder: 'Select Status',
-            closeOnSelect: false, // So dropdown stays open
+            closeOnSelect: false,
             width: 'resolve'
         });
     });
 </script>
-
-<!-- Other scripts if any... -->
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const clientModal = document.getElementById('clientModal');
@@ -215,24 +219,22 @@
                 footer.innerHTML = isViewMode
                     ? ''
                     : `<button type="button" class="btn btn-success" id="modalSaveButton">Save</button>`;
+
                 const modal = new bootstrap.Modal(document.getElementById('clientModal'));
                 modal.show();
 
-
-
-                // Attach click event to modal Save button
-                document.getElementById('modalSaveButton').onclick = function () {
-                    const form = document.querySelector('#clientModalContent form');
-                    if (form) {
-                        form.submit(); // Submit the form
-                    }
-                };
+                const saveBtn = document.getElementById('modalSaveButton');
+                if (saveBtn) {
+                    saveBtn.onclick = function () {
+                        const form = document.querySelector('#clientModalContent form');
+                        if (form) {
+                            form.submit();
+                        }
+                    };
+                }
             });
     }
 </script>
-
-
-
 
 </body>
 </html>

@@ -46,12 +46,12 @@
                             <td>{{ $registration->pin }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <button class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editModal{{ $registration->id }}">
+                                    <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#editModal{{ $registration->id }}">
                                         Edit
                                     </button>
                                     <form action="{{ route('registrations.destroy', [$client->id, $registration->id]) }}" method="POST" onsubmit="return confirm('Are you sure?')" class="m-0">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-info">Delete</button>
                                     </form>
                                 </div>
                             </td>

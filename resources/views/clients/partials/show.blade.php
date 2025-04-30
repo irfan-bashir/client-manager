@@ -69,6 +69,10 @@
         <div class="info-item"><span class="label">Email:</span> <span class="value">{{ $client->email }}</span></div>
         <div class="info-item"><span class="label">Address:</span> <span class="value">{{ $client->address }}</span></div>
         <div class="info-item"><span class="label">City:</span> <span class="value">{{ $client->city }}</span></div>
+        <div class="info-item" style="white-space: nowrap;">
+            <span class="label" style="margin-right: 5px;">Location URL:</span>
+            <a href="{{ $client->location_url }}" target="_blank" style="text-decoration: none; color: #007bff;">{{ $client->location_url }}</a>
+        </div>
     </div>
 
     @if($client->registrations->isNotEmpty())

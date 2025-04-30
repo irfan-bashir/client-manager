@@ -60,12 +60,12 @@
                             <td>{{ $task->send_reminder ? 'Yes' : 'No' }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <button class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editTaskModal{{ $task->id }}">
+                                    <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#editTaskModal{{ $task->id }}">
                                         Edit
                                     </button>
                                     <form action="{{ route('tasks.destroy', [$client->id, $task->id]) }}" method="POST" onsubmit="return confirm('Delete this task?')" class="m-0">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-info">Delete</button>
                                     </form>
                                 </div>
 

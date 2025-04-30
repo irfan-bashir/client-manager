@@ -96,24 +96,30 @@
         @endif
     </div>
 
-    <!-- Add Modal -->
+    <!-- Add Task Modal -->
     <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog modal-lg"> <!-- wider modal for spacing -->
+            <div class="modal-content border-0 shadow">
                 <form action="{{ route('tasks.store', $client->id) }}" method="POST">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addTaskLabel">Add Task</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title">
+                            <i class="bi bi-list-check me-2"></i>Add Task
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+
                     <div class="modal-body">
                         @include('tasks._form', ['task' => null])
                     </div>
+
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Add Task</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check2-circle me-1"></i>Save Task
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
 @endsection
