@@ -236,5 +236,17 @@
     }
 </script>
 
+<script>
+    // Auto-dismiss alerts after 5 seconds
+    setTimeout(function () {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function (alert) {
+            if (alert.classList.contains('show')) {
+                bootstrap.Alert.getOrCreateInstance(alert).close();
+            }
+        });
+    }, 5000);
+</script>
+
 </body>
 </html>

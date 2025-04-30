@@ -1,4 +1,5 @@
-<!-- Tasks Tab -->
+@php use Carbon\Carbon; @endphp
+    <!-- Tasks Tab -->
 <div class="card mb-4">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Tasks for {{ $client->name }}</h5>
@@ -7,18 +8,23 @@
     <div class="card-body">
 
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
         @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
+
 
         @if ($tasks->isEmpty())
             <p class="mb-0">No tasks found.</p>
@@ -28,8 +34,8 @@
                     <thead class="table-light">
                     <tr>
                         <th>#</th>
-                        <th>Organization</th>
-                        <th>Form</th>
+                        <th>Organization Name</th>
+                        <th>Form Name</th>
                         <th>Description</th>
                         <th>Renewal Date</th>
                         <th>Status</th>
@@ -44,7 +50,7 @@
                             <td>{{ $task->organization_name }}</td>
                             <td>{{ $task->form_name }}</td>
                             <td>{{ $task->description }}</td>
-                            <td>{{ $task->renewal_date }}</td>
+                            <td>{{ Carbon::parse($task->renewal_date)->format('jS F Y') }}</td>
                             <td>
                                 @php
                                     $color = match($task->status) {
@@ -60,10 +66,12 @@
                             <td>{{ $task->send_reminder ? 'Yes' : 'No' }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#editTaskModal{{ $task->id }}">
+                                    <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal"
+                                            data-bs-target="#editTaskModal{{ $task->id }}">
                                         Edit
                                     </button>
-                                    <form action="{{ route('tasks.destroy', [$client->id, $task->id]) }}" method="POST" onsubmit="return confirm('Delete this task?')" class="m-0">
+                                    <form action="{{ route('tasks.destroy', [$client->id, $task->id]) }}" method="POST"
+                                          onsubmit="return confirm('Delete this task?')" class="m-0">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-info">Delete</button>
                                     </form>
@@ -80,7 +88,8 @@
                                         @csrf @method('PUT')
                                         <div class="modal-header">
                                             <h5 class="modal-title">Edit Task</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             @include('tasks._form', ['task' => $task])

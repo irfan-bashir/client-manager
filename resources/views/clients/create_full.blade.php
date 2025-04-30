@@ -11,7 +11,7 @@
                 <!-- Tabs -->
                 <ul class="nav nav-tabs mb-4" id="clientTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="client-tab" data-bs-toggle="tab" data-bs-target="#client" type="button">Client Info</button>
+                        <button class="nav-link active" id="client-tab" data-bs-toggle="tab" data-bs-target="#client" type="button">Basic Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link disabled" id="registrations-tab" type="button">Registrations</button>

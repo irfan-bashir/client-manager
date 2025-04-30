@@ -3,15 +3,27 @@
 @section('content')
     <div class="container py-4">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">Clients</h4>
+            <div class="card-header d-flex flex-wrap justify-content-between align-items-center" style="z-index: 1; position: relative;">
+                <h4 class="mb-2 mb-md-0">Clients</h4>
+
+                <form action="{{ route('clients.index') }}" method="GET" class="d-flex align-items-center mb-2 mb-md-0" style="gap: 10px;">
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        placeholder="Search clients..."
+                        class="form-control"
+                        style="min-width: 250px;"
+                    >
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </form>
+
                 <a href="{{ route('clients.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus me-1"></i> Add Client
                 </a>
             </div>
 
-            <div class="card-body">
-
+            <div class="card-body" style="overflow: visible;"> {{-- Fixes dropdown being cut off --}}
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">
@@ -26,7 +38,7 @@
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
-                <div class="table-responsive">
+                <div class="table-responsive" style="overflow: visible;">
                     <table class="table table-bordered table-hover align-middle">
                         <thead class="table-light">
                         <tr>
@@ -37,7 +49,7 @@
                             <th>Contact Number</th>
                             <th>Email</th>
                             <th>City</th>
-                            <th>Location</th>
+                            <th>Address</th>
                             <th>Actions</th>
                         </tr>
                         </thead>

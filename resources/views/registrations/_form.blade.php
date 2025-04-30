@@ -7,7 +7,7 @@
             <i class="bi bi-building me-1"></i> Organization Name<span class="text-danger">*</span>
         </label>
         <select name="organization_name" class="form-select" required>
-            <option value="">-- Select Organization --</option>
+            <option value="">-- Select Organization Name --</option>
             @foreach([
                 'BRA', 'Department of Tourism', 'FBR', 'IPO', 'KPRA', 'Other', 'PEC',
                 'PRA', 'PTA', 'PSEB', 'SECP / CEO', 'SECP / Director', 'SECP/ Next of Kin', 'SRA'

@@ -11,15 +11,39 @@ class RenewalController extends Controller
 {
     public function index(Request $request)
     {
-        $statusFilter = $request->get('status', ['Overdue', 'Upcoming']);
+        $hasStatusParam = $request->has('status');
+        $statusFilter = $request->get('status'); // can be null, [], or array
 
-        $tasks = Task::with('registration.client')
-            ->whereIn('status', $statusFilter)
-            ->orderBy('renewal_date')
-            ->paginate(10);
+        if (!$hasStatusParam) {
+            // First load → show only 'Overdue' and 'Upcoming'
+            $statusFilterToQuery = ['Overdue', 'Upcoming'];
+        } elseif (is_array($statusFilter) && count($statusFilter) > 1) {
+            // User selected filters → use them
+            $statusFilterToQuery = $statusFilter;
+        } else {
+            // User cleared all selections → show all
+            $statusFilterToQuery = null;
+        }
 
-        return view('renewals.index', compact('tasks', 'statusFilter'));
+        $tasksQuery = Task::with('registration.client')
+            ->when($statusFilterToQuery, fn($q) => $q->whereIn('status', $statusFilterToQuery))
+            ->orderBy('renewal_date');
+
+        $tasks = $tasksQuery
+            ->paginate(10)
+            ->appends(['status' => $statusFilter]);
+
+        // For preselecting dropdown
+        $statusFilterForView = !$hasStatusParam ? ['Overdue', 'Upcoming'] : ($statusFilter ?? []);
+
+        return view('renewals.index', [
+            'tasks' => $tasks,
+            'statusFilter' => $statusFilterForView,
+        ]);
     }
+
+
+
 
     public function sendReminder(Task $task)
     {
@@ -44,7 +68,7 @@ class RenewalController extends Controller
             "*Action Required:*\n" .
             "• Please ensure the form is completed at your earliest convenience to avoid any delays or penalties.\n" .
             "• If the form has already been submitted, you may disregard this message.\n\n" .
-            "For any questions or support, feel free to contact us at *sales.abconsultants@gmail.com* or *0336 5573186*.\n\n" .
+            "For any questions or support, feel free to contact us at *sales.abconsultants@gmail.com* or *+923365573186*.\n\n" .
             "Thank you for your prompt attention.\n\n" .
             "*Best regards*,\n" .
             "AB Consultants";

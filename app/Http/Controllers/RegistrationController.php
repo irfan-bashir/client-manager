@@ -71,7 +71,11 @@ class RegistrationController extends Controller
     {
         $this->authorizeClient($client, $registration);
         $registration->delete();
-        return redirect()->route('registrations.index', $client)->with('success', 'Registration deleted.');
+        return redirect()
+            ->route('clients.edit', $client->id)
+            ->with('success', 'Registration deleted successfully.')
+            ->withFragment('registrations');
+//        return redirect()->route('registrations.index', $client)->with('success', 'Registration deleted.');
     }
 
     private function authorizeClient(Client $client, Registration $registration)

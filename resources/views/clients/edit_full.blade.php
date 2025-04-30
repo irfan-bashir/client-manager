@@ -7,7 +7,7 @@
         <!-- Tabs -->
         <ul class="nav nav-tabs mb-4" id="clientTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="client-tab" data-bs-toggle="tab" data-bs-target="#client" type="button">Client Info</button>
+                <button class="nav-link active" id="client-tab" data-bs-toggle="tab" data-bs-target="#client" type="button">Basic Information</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="registrations-tab" data-bs-toggle="tab" data-bs-target="#registrations" type="button">Registrations</button>
@@ -35,7 +35,12 @@
 
             <!-- Tab 3: Tasks -->
             <div class="tab-pane fade" id="tasks" role="tabpanel">
-                @include('clients.partials._tasks_tab', ['client' => $client, 'tasks' => $client->tasks()->paginate(10)])
+                @include('clients.partials._tasks_tab', [
+                    'client' => $client,
+                    'tasks' => $client->tasks()
+                         ->orderByRaw("CASE WHEN renewal_date >= CURDATE() THEN 0 ELSE 1 END, renewal_date ASC")
+                        ->paginate(10)
+                ])
             </div>
         </div>
     </div>

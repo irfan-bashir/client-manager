@@ -59,6 +59,10 @@ class TaskController extends Controller
     public function destroy(Client $client, Task $task)
     {
         $task->delete();
-        return redirect()->route('tasks.index', $client)->with('success', 'Task deleted.');
+        return redirect()
+            ->route('clients.edit', $client->id)
+            ->with('success', 'Task deleted successfully.')
+            ->withFragment('tasks');
+//        return redirect()->route('tasks.index', $client)->with('success', 'Task deleted.');
     }
 }

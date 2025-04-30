@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 @extends('layouts.app')
 
 @section('content')
@@ -17,77 +18,109 @@
 
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold">Renewals Dashboard</h2>
+            <h2 class="fw-bold">Renewals</h2>
             <form method="GET" class="d-flex align-items-center gap-2">
-                <label for="status" class="fw-semibold me-2 mb-0">Filter by Status:</label>
+                <label for="status" class="fw-semibold me-2 mb-0">Status:</label>
+
+                <!-- Hidden field ensures status[] is always submitted -->
+                <input type="hidden" name="status[]" value="">
+                @php
+                    // Ensure selected statuses are always an array
+                    $selectedStatuses = (array) ($statusFilter ?? []);
+                @endphp
+
+
                 <select name="status[]" id="status" class="form-select" multiple>
+                    @php
+                        $selectedStatuses = request()->has('status') ? (array) request('status') : ['Overdue', 'Upcoming'];
+                    @endphp
+
                     @foreach(['Upcoming', 'Overdue', 'Completed', 'Not Interested'] as $status)
-                        <option value="{{ $status }}" {{ in_array($status, (array) request('status'), true) ? 'selected' : '' }}>
+                        <option
+                            value="{{ $status }}" {{ in_array($status, $selectedStatuses, true) ? 'selected' : '' }}>
                             {{ $status }}
                         </option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-outline-primary">Apply</button>
+
+                <button type="submit" class="btn btn-outline-primary">Filter</button>
             </form>
-        </div>
 
-        <table class="table table-hover table-bordered align-middle">
-            <thead class="table-primary text-center">
+        </div>
+    </div>
+
+
+    <table class="table table-hover table-bordered align-middle">
+        <thead class="table-primary text-center">
+        <tr>
+            <th>#</th>
+            <th>Client</th>
+            <th>Organization</th>
+            <th>Form</th>
+            <th>Description</th>
+            <th>Renewal Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @forelse($tasks as $task)
             <tr>
-                <th>#</th>
-                <th>Client</th>
-                <th>Organization</th>
-                <th>Form</th>
-                <th>Description</th>
-                <th>Renewal Date</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <td class="text-center">{{ ($tasks->currentPage() - 1) * $tasks->perPage() + $loop->iteration }}</td>
+                <td>{{ $task->client->name ?? '-' }}</td>
+                <td>{{ $task->organization_name }}</td>
+                <td>{{ $task->form_name }}</td>
+                <td>{{ $task->description }}</td>
+                <td>{{ Carbon::parse($task->renewal_date)->format('jS F Y') }}</td>
+                @php
+                    $statusClasses = [
+                        'Completed' => 'text-white bg-success',
+                        'Overdue' => 'text-white bg-danger',
+                        'Upcoming' => 'text-white bg-primary',
+                        'Not Interested' => 'text-white bg-secondary',
+                    ];
+                @endphp
+
+                <td>
+                    <form method="POST" action="{{ url('/renewals/'.$task->id.'/update-status') }}">
+                        @csrf
+                        <select name="status"
+                                class="form-select form-select-sm {{ $statusClasses[$task->status] ?? '' }}"
+                                onchange="this.form.submit()">
+                            @foreach(['Upcoming', 'Overdue', 'Completed', 'Not Interested'] as $s)
+                                <option value="{{ $s }}" {{ $task->status === $s ? 'selected' : '' }}>
+                                    {{ $s }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </td>
+                <td class="d-flex gap-2">
+                    <form method="POST" action="{{ route('renewals.sendReminder', $task) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-info">Email</button>
+                    </form>
+
+                    <form method="POST" action="{{ route('renewals.generateWhatsapp', $task) }}">
+                        @csrf
+                        <button type="button" class="btn btn-sm btn-outline-success"
+                                onclick="showWhatsappMessage({{ $task->id }})">WhatsApp
+                        </button>
+                    </form>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            @forelse($tasks as $task)
-                <tr>
-                    <td class="text-center">{{ ($tasks->currentPage() - 1) * $tasks->perPage() + $loop->iteration }}</td>
-                    <td>{{ $task->client->name ?? '-' }}</td>
-                    <td>{{ $task->organization_name }}</td>
-                    <td>{{ $task->form_name }}</td>
-                    <td>{{ $task->description }}</td>
-                    <td>{{ \Carbon\Carbon::parse($task->renewal_date)->format('d M Y') }}</td>
-                    <td>
-                        <form method="POST" action="{{ url('/renewals/'.$task->id.'/update-status') }}">
-                            @csrf
-                            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-                                @foreach(['Upcoming', 'Overdue', 'Completed', 'Not Interested'] as $s)
-                                    <option value="{{ $s }}" {{ $task->status === $s ? 'selected' : '' }}>
-                                        {{ $s }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </form>
-                    </td>
-                    <td class="d-flex gap-2">
-                        <form method="POST" action="{{ route('renewals.sendReminder', $task) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-outline-info">Email</button>
-                        </form>
+        @empty
+            <tr>
+                <td colspan="8" class="text-center text-muted">No renewals found.</td>
+            </tr>
+        @endforelse
+        </tbody>
+    </table>
 
-                        <form method="POST" action="{{ route('renewals.generateWhatsapp', $task) }}">
-                            @csrf
-                            <button type="button" class="btn btn-sm btn-outline-success" onclick="showWhatsappMessage({{ $task->id }})">WhatsApp</button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="8" class="text-center text-muted">No renewals found.</td>
-                </tr>
-            @endforelse
-            </tbody>
-        </table>
-
-        <div class="mt-4">
-            {{ $tasks->links('pagination::bootstrap-5') }}
-        </div>
+    <div class="mt-4">
+        {{ $tasks->appends(request()->query())->links('pagination::bootstrap-5') }}
+        {{--            {{ $tasks->links('pagination::bootstrap-5') }}--}}
+    </div>
     </div>
 
     <!-- WhatsApp Modal -->
@@ -110,11 +143,11 @@
     </div>
 
     <!-- Scripts -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#status').select2({
                 placeholder: "Select Status",
                 allowClear: true,
@@ -153,6 +186,7 @@
             background-color: #f1f3f5;
             border-radius: 6px;
         }
+
         .table-hover tbody tr:hover {
             background-color: #f8f9fa;
         }

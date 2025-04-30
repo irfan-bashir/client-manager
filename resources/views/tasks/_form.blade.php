@@ -7,7 +7,7 @@
             <i class="bi bi-building me-1"></i> Organization Name<span class="text-danger">*</span>
         </label>
         <select name="organization_name" class="form-select" required>
-            <option value="">-- Select Organization --</option>
+            <option value="">-- Select Organization Name --</option>
             @foreach([
                 'BRA', 'Department of Tourism', 'FBR', 'IPO', 'KPRA', 'Other', 'PEC',
                 'PRA', 'PTA', 'PSEB', 'SECP / CEO', 'SECP / Director', 'SECP/ Next of Kin', 'SRA'
@@ -20,7 +20,7 @@
         @error('organization_name') <small class="text-danger">{{ $message }}</small> @enderror
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <label class="form-label">
             <i class="bi bi-file-earmark-text me-1"></i> Form Name<span class="text-danger">*</span>
         </label>
@@ -34,14 +34,6 @@
         </label>
         <input type="date" name="renewal_date" class="form-control" value="{{ old('renewal_date', $task->renewal_date ?? '') }}" required>
         @error('renewal_date') <small class="text-danger">{{ $message }}</small> @enderror
-    </div>
-
-    <div class="col-12">
-        <label class="form-label">
-            <i class="bi bi-pencil-square me-1"></i> Description
-        </label>
-        <textarea name="description" class="form-control" rows="2">{{ old('description', $task->description ?? '') }}</textarea>
-        @error('description') <small class="text-danger">{{ $message }}</small> @enderror
     </div>
 
     <div class="col-md-6">
@@ -58,10 +50,19 @@
         @error('status') <small class="text-danger">{{ $message }}</small> @enderror
     </div>
 
+    <div class="col-12">
+        <label class="form-label">
+            <i class="bi bi-pencil-square me-1"></i> Description
+        </label>
+        <textarea name="description" class="form-control" rows="2">{{ old('description', $task->description ?? '') }}</textarea>
+        @error('description') <small class="text-danger">{{ $message }}</small> @enderror
+    </div>
+
+
     <div class="col-md-6 d-flex align-items-center">
         <div class="form-check mt-4">
             <input type="checkbox" name="send_reminder" class="form-check-input"
-                {{ old('send_reminder', $task->send_reminder ?? false) ? 'checked' : '' }}>
+                {{ old('send_reminder', $task->send_reminder ?? true) ? 'checked' : '' }}>
             <label class="form-check-label">
                 <i class="bi bi-bell me-1"></i> Send Reminder
             </label>

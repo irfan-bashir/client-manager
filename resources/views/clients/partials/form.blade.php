@@ -3,7 +3,7 @@
 
 <div class="row g-3">
     <div class="col-md-6">
-        <label class="form-label">Name<span class="text-danger">*</span></label>
+        <label class="form-label">Client Name (Company / Firm)<span class="text-danger">*</span></label>
         <input type="text" name="name" class="form-control" value="{{ old('name', $client->name ?? '') }}" required>
         @error('name') <small class="text-danger">{{ $message }}</small> @enderror
     </div>
@@ -15,26 +15,21 @@
     </div>
 
     <div class="col-md-6">
-        <label class="form-label">Phone<span class="text-danger">*</span></label>
-        <input type="text" name="phone" class="form-control" value="{{ old('phone', $client->phone ?? '') }}" required>
-        @error('phone') <small class="text-danger">{{ $message }}</small> @enderror
-    </div>
-
-    <div class="col-md-6">
         <label class="form-label">POC Name<span class="text-danger">*</span></label>
         <input type="text" name="poc_name" class="form-control" value="{{ old('poc_name', $client->poc_name ?? '') }}" required>
         @error('poc_name') <small class="text-danger">{{ $message }}</small> @enderror
     </div>
 
-    <div class="col-md-12">
-        <label class="form-label">Location</label>
-        <textarea id="address" name="address" class="form-control" rows="2">{{ old('address', $client->address ?? '') }}</textarea>
-        @error('address') <small class="text-danger">{{ $message }}</small> @enderror
+    <div class="col-md-6">
+        <label class="form-label">Contact Number<span class="text-danger">*</span></label>
+        <input type="text" name="phone" class="form-control" value="{{ old('phone', $client->phone ?? '') }}" required>
+        @error('phone') <small class="text-danger">{{ $message }}</small> @enderror
     </div>
 
     <div class="col-md-12">
-        <label for="location_url" class="form-label">Location URL</label>
-        <input type="url" class="form-control" id="location_url" name="location_url" value="{{ old('location_url', $client->location_url ?? '') }}" placeholder="Enter Google Maps or any location URL">
+        <label class="form-label">Address</label>
+        <textarea id="address" name="address" class="form-control" rows="2">{{ old('address', $client->address ?? '') }}</textarea>
+        @error('address') <small class="text-danger">{{ $message }}</small> @enderror
     </div>
 
     <div class="col-md-6">
@@ -67,5 +62,10 @@
             @endforeach
         </select>
         @error('city') <small class="text-danger">{{ $message }}</small> @enderror
+    </div>
+
+    <div class="col-md-12">
+        <label for="location_url" class="form-label">Location URL</label>
+        <input type="url" class="form-control" id="location_url" name="location_url" value="{{ old('location_url', $client->location_url ?? '') }}" placeholder="Enter Google Maps or any location URL">
     </div>
 </div>

@@ -8,20 +8,25 @@
     </div>
     <div class="card-body">
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
         @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
 
-        @if ($registrations->isEmpty())
+
+    @if ($registrations->isEmpty())
             <p class="mb-0">No registrations found.</p>
         @else
             <div class="table-responsive">
@@ -29,7 +34,7 @@
                     <thead class="table-light">
                     <tr>
                         <th>#</th>
-                        <th>Organization</th>
+                        <th>Organization Name</th>
                         <th>Username</th>
                         <th>Password</th>
                         <th>PIN</th>
