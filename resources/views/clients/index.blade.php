@@ -55,7 +55,7 @@
                         </thead>
                         <tbody>
                         @forelse($clients as $client)
-                            <tr>
+                            <tr class="clickable-row" data-href="{{ route('clients.edit', $client) }}" style="cursor: pointer;">
                                 <td>{{ ($clients->currentPage() - 1) * $clients->perPage() + $loop->iteration }}</td>
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->company_type }}</td>
@@ -64,7 +64,7 @@
                                 <td>{{ $client->email }}</td>
                                 <td>{{ $client->city }}</td>
                                 <td>{{ $client->address }}</td>
-                                <td>
+                                <td class="no-click">
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
@@ -121,4 +121,21 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const rows = document.querySelectorAll('tr.clickable-row');
+                rows.forEach(row => {
+                    row.addEventListener('click', function (e) {
+                        // Ignore clicks on dropdown or buttons
+                        if (e.target.closest('.no-click') || e.target.tagName === 'BUTTON' || e.target.tagName === 'A' || e.target.closest('form')) {
+                            return;
+                        }
+                        window.location = this.dataset.href;
+                    });
+                });
+            });
+        </script>
+    @endpush
+
 @endsection

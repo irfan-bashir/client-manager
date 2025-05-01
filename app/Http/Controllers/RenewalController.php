@@ -13,34 +13,45 @@ class RenewalController extends Controller
     {
         $hasStatusParam = $request->has('status');
         $statusFilter = $request->get('status'); // can be null, [], or array
+        $search = $request->get('search');
+        $hasSearchParam = $request->has('search');
 
-        if (!$hasStatusParam) {
-            // First load → show only 'Overdue' and 'Upcoming'
+        if ($hasSearchParam) {
+            $statusFilterToQuery = null;
+        } elseif (!$hasStatusParam) {
             $statusFilterToQuery = ['Overdue', 'Upcoming'];
         } elseif (is_array($statusFilter) && count($statusFilter) > 1) {
-            // User selected filters → use them
             $statusFilterToQuery = $statusFilter;
         } else {
-            // User cleared all selections → show all
             $statusFilterToQuery = null;
         }
 
-        $tasksQuery = Task::with('registration.client')
+        $tasksQuery = Task::with(['registration.client'])
             ->when($statusFilterToQuery, fn($q) => $q->whereIn('status', $statusFilterToQuery))
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereHas('client', function ($clientQuery) use ($search) {
+                        $clientQuery->where('name', 'like', "%{$search}%");
+                    })->orWhere('organization_name', 'like', "%{$search}%");
+                });
+            })
             ->orderBy('renewal_date');
 
         $tasks = $tasksQuery
             ->paginate(10)
-            ->appends(['status' => $statusFilter]);
+            ->appends([
+                'status' => $statusFilter,
+                'search' => $search,
+            ]);
 
-        // For preselecting dropdown
-        $statusFilterForView = !$hasStatusParam ? ['Overdue', 'Upcoming'] : ($statusFilter ?? []);
+        $statusFilterForView = !$hasStatusParam && !$hasSearchParam ? ['Overdue', 'Upcoming'] : ($statusFilter ?? []);
 
         return view('renewals.index', [
             'tasks' => $tasks,
             'statusFilter' => $statusFilterForView,
         ]);
     }
+
 
 
 

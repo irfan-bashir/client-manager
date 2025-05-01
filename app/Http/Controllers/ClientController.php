@@ -92,6 +92,6 @@ class ClientController extends Controller
     public function generatePDF(Client $client)
     {
         $pdf = Pdf::loadView('clients.pdf', compact('client'));
-        return $pdf->download($client->name . '_details.pdf');
+        return $pdf->download('Client_Report_'.$client->name);
     }
 }

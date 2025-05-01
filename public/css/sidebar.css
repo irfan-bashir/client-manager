@@ -1,0 +1,55 @@
+/* sidebar.css */
+
+.sidebar {
+    width: 250px;
+    background-color: #1f2937; /* dark slate */
+    min-height: 100vh;
+    padding-top: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar .accordion-button {
+    background-color: transparent;
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .accordion-button.collapsed {
+    color: #cbd5e1;
+}
+
+.sidebar .accordion-button:not(.collapsed) {
+    background-color: #374151;
+    color: #ffffff;
+}
+
+.sidebar .accordion-body a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 0.5rem 2rem;
+    font-size: 0.95rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar .accordion-body a:hover {
+    background-color: #4b5563;
+    color: #ffffff;
+}
+
+.sidebar .accordion-body a.bg-secondary {
+    background-color: #6366f1 !important; /* Indigo highlight */
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}

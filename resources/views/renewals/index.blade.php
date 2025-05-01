@@ -17,24 +17,32 @@
     @endif
 
     <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
             <h2 class="fw-bold">Renewals</h2>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap mb-4 gap-2">
+            <!-- Search Form -->
+            <form action="{{ route('renewals.index') }}" method="GET" class="d-flex align-items-center" style="gap: 10px;">
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="Search clients..."
+                    class="form-control"
+                    style="min-width: 250px;"
+                >
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+            </form>
+
+            <!-- Status Filter Form -->
             <form method="GET" class="d-flex align-items-center gap-2">
                 <label for="status" class="fw-semibold me-2 mb-0">Status:</label>
-
-                <!-- Hidden field ensures status[] is always submitted -->
                 <input type="hidden" name="status[]" value="">
                 @php
-                    // Ensure selected statuses are always an array
-                    $selectedStatuses = (array) ($statusFilter ?? []);
+                    $selectedStatuses = request()->has('status') ? (array) request('status') : $statusFilter;
                 @endphp
-
-
                 <select name="status[]" id="status" class="form-select" multiple>
-                    @php
-                        $selectedStatuses = request()->has('status') ? (array) request('status') : ['Overdue', 'Upcoming'];
-                    @endphp
-
                     @foreach(['Upcoming', 'Overdue', 'Completed', 'Not Interested'] as $status)
                         <option
                             value="{{ $status }}" {{ in_array($status, $selectedStatuses, true) ? 'selected' : '' }}>
@@ -42,27 +50,28 @@
                         </option>
                     @endforeach
                 </select>
-
                 <button type="submit" class="btn btn-outline-primary">Filter</button>
             </form>
-
         </div>
+
     </div>
 
 
     <table class="table table-hover table-bordered align-middle">
-        <thead class="table-primary text-center">
+        <!-- Table Head -->
+        <thead class="table-primary">
         <tr>
-            <th>#</th>
-            <th>Client</th>
-            <th>Organization</th>
-            <th>Form</th>
-            <th>Description</th>
-            <th>Renewal Date</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th style="width: 40px;">#</th>
+            <th style="min-width: 120px;">Client</th>
+            <th style="min-width: 120px;">Organization</th>
+            <th style="min-width: 200px; max-width: 300px;">Form</th>
+            <th style="min-width: 200px; max-width: 300px;">Description</th>
+            <th style="white-space: nowrap; width: 140px;">Renewal Date</th>
+            <th style="white-space: nowrap; width: 140px;">Status</th>
+            <th style="white-space: nowrap; width: 160px;">Actions</th>
         </tr>
         </thead>
+
         <tbody>
         @forelse($tasks as $task)
             <tr>
@@ -95,18 +104,20 @@
                         </select>
                     </form>
                 </td>
-                <td class="d-flex gap-2">
-                    <form method="POST" action="{{ route('renewals.sendReminder', $task) }}">
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-outline-info">Email</button>
-                    </form>
+                <td class="text-nowrap">
+                    <div class="d-flex gap-2">
+                        <form method="POST" action="{{ route('renewals.sendReminder', $task) }}">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-info">Email</button>
+                        </form>
 
-                    <form method="POST" action="{{ route('renewals.generateWhatsapp', $task) }}">
-                        @csrf
-                        <button type="button" class="btn btn-sm btn-outline-success"
-                                onclick="showWhatsappMessage({{ $task->id }})">WhatsApp
-                        </button>
-                    </form>
+                        <form method="POST" action="{{ route('renewals.generateWhatsapp', $task) }}">
+                            @csrf
+                            <button type="button" class="btn btn-sm btn-outline-success"
+                                    onclick="showWhatsappMessage({{ $task->id }})">WhatsApp
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         @empty

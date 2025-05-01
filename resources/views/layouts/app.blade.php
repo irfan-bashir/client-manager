@@ -22,6 +22,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
+{{--    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">--}}
+
 
 
     <style>
@@ -73,6 +75,13 @@
         .modal-header, .modal-footer {
             background-color: #f8f9fa;
         }
+        .sidebar a.bg-secondary {
+            background-color: #4b5563 !important;
+        }
+        .sidebar a:hover {
+            background-color: #374151 !important;
+        }
+
     </style>
 </head>
 <body>
@@ -103,19 +112,28 @@
     </div>
 </nav>
 
+
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="accordion" id="sidebarAccordion">
         <!-- Dashboard Section -->
         <div class="accordion-item border-0">
             <h2 class="accordion-header" id="headingDashboard">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDashboard">
+                <button class="accordion-button {{ Request::is('renewals*') ? '' : 'collapsed' }}"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseDashboard">
                     <i class="fa-solid fa-gauge me-2"></i>Dashboard
                 </button>
             </h2>
-            <div id="collapseDashboard" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+            <div id="collapseDashboard"
+                 class="accordion-collapse collapse {{ Request::is('renewals*') ? 'show' : '' }}"
+                 data-bs-parent="#sidebarAccordion">
                 <div class="accordion-body p-0">
-                    <a href="{{ route('renewals.index') }}" class="d-block px-4 py-2">Renewals</a>
+                    <a href="{{ route('renewals.index') }}"
+                       class="d-block px-4 py-2 {{ Request::is('renewals*') ? 'bg-secondary text-white fw-semibold' : '' }}">
+                        Renewals
+                    </a>
                 </div>
             </div>
         </div>
@@ -123,19 +141,31 @@
         <!-- Clients Section -->
         <div class="accordion-item border-0">
             <h2 class="accordion-header" id="headingClients">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClients">
+                <button class="accordion-button {{ Request::is('clients*') ? '' : 'collapsed' }}"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseClients">
                     <i class="fa-solid fa-users me-2"></i>Clients
                 </button>
             </h2>
-            <div id="collapseClients" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+            <div id="collapseClients"
+                 class="accordion-collapse collapse {{ Request::is('clients*') ? 'show' : '' }}"
+                 data-bs-parent="#sidebarAccordion">
                 <div class="accordion-body p-0">
-                    <a href="{{ route('clients.create') }}" class="d-block px-4 py-2">Add Client</a>
-                    <a href="{{ route('clients.index') }}" class="d-block px-4 py-2">Manage Clients</a>
+                    <a href="{{ route('clients.create') }}"
+                       class="d-block px-4 py-2 {{ Request::is('clients/create') ? 'bg-secondary text-white fw-semibold' : '' }}">
+                        Add Client
+                    </a>
+                    <a href="{{ route('clients.index') }}"
+                       class="d-block px-4 py-2 {{ Request::is('clients') ? 'bg-secondary text-white fw-semibold' : '' }}">
+                        Manage Clients
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Main Content -->
 <div class="main-content">
@@ -247,6 +277,6 @@
         });
     }, 5000);
 </script>
-
+@stack('scripts')
 </body>
 </html>
