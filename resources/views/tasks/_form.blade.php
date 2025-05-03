@@ -10,7 +10,7 @@
             <option value="">-- Select Organization Name --</option>
             @foreach([
                 'BRA', 'Department of Tourism', 'FBR', 'IPO', 'KPRA', 'Other', 'PEC',
-                'PRA', 'PTA', 'PSEB', 'SECP / CEO', 'SECP / Director', 'SECP/ Next of Kin', 'SRA'
+                'PRA', 'PTA', 'PSEB', 'SECP', 'SRA'
             ] as $org)
                 <option value="{{ $org }}" {{ old('organization_name', $task->organization_name ?? '') === $org ? 'selected' : '' }}>
                     {{ $org }}

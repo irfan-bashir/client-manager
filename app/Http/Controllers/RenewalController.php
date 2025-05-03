@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Mail\TaskReminderMail;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Traits\ExportsCsv;
 
 class RenewalController extends Controller
 {
+    use ExportsCsv;
     public function index(Request $request)
     {
         $hasStatusParam = $request->has('status');
@@ -32,7 +35,10 @@ class RenewalController extends Controller
                 $query->where(function ($q) use ($search) {
                     $q->whereHas('client', function ($clientQuery) use ($search) {
                         $clientQuery->where('name', 'like', "%{$search}%");
-                    })->orWhere('organization_name', 'like', "%{$search}%");
+                    })
+                        ->orWhere('organization_name', 'like', "%{$search}%")
+                        ->orWhere('form_name', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
                 });
             })
             ->orderBy('renewal_date');
@@ -94,4 +100,33 @@ class RenewalController extends Controller
 
         return back()->with('success', 'Status updated successfully!');
     }
+
+    public function export()
+    {
+        $tasks = Task::with('client')->get();
+
+        $data = $tasks->map(function ($task) {
+            return [
+                optional($task->client)->name,
+                $task->organization_name,
+                $task->form_name,
+                $task->description,
+                Carbon::parse($task->renewal_date)->format('jS F Y'),
+                $task->status,
+            ];
+        });
+
+        $headers = [
+            'Client Name',
+            'Organization Name',
+            'Form Name',
+            'Description',
+            'Renewal Date',
+            'Status',
+        ];
+
+        return $this->exportToCsv('renewals.csv', $data, $headers);
+    }
+
+
 }

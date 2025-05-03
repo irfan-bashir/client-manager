@@ -3,25 +3,31 @@
 @section('content')
     <div class="container py-4">
         <div class="card">
-            <div class="card-header d-flex flex-wrap justify-content-between align-items-center" style="z-index: 1; position: relative;">
-                <h4 class="mb-2 mb-md-0">Clients</h4>
+            <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-3" style="z-index: 1; position: relative;">
+                <h4 class="mb-0">Clients</h4>
 
-                <form action="{{ route('clients.index') }}" method="GET" class="d-flex align-items-center mb-2 mb-md-0" style="gap: 10px;">
-                    <input
-                        type="text"
-                        name="search"
-                        value="{{ request('search') }}"
-                        placeholder="Search clients..."
-                        class="form-control"
-                        style="min-width: 250px;"
-                    >
-                    <button type="submit" class="btn btn-outline-primary">Search</button>
-                </form>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <form action="{{ route('clients.index') }}" method="GET" class="d-flex align-items-center gap-2 mb-0">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Search clients..."
+                            class="form-control"
+                            style="min-width: 200px;"
+                        >
+                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                    </form>
 
-                <a href="{{ route('clients.create') }}" class="btn btn-primary">
-                    <i class="fas fa-plus me-1"></i> Add Client
-                </a>
+                    <a href="{{ route('clients.export') }}" class="btn btn-outline-success" target="_blank">
+                        <i class="fas fa-file-export me-1"></i> Export Clients
+                    </a>
+                    <a href="{{ route('clients.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Add Client
+                    </a>
+                </div>
             </div>
+
 
             <div class="card-body" style="overflow: visible;"> {{-- Fixes dropdown being cut off --}}
                 @if ($errors->any())

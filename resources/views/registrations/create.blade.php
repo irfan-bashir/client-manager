@@ -10,7 +10,7 @@
                 <label>Organization Name</label>
                 <select name="organization_name" class="form-control" required>
                     <option value="">Select</option>
-                    <option>SECP / CEO</option>
+                    <option>SECP</option>
                     <option>FBR</option>
                     <option>PTA</option>
                     <option>PEC</option>
@@ -22,8 +22,6 @@
                     <option>SRA</option>
                     <option>PRA</option>
                     <option>BRA</option>
-                    <option>SECP / Director</option>
-                    <option>SECP/ Next of Kin</option>
                 </select>
             </div>
 

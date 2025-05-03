@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Traits\ExportsCsv;
 
 class ClientController extends Controller
 {
+    use ExportsCsv;
     public function index(Request $request)
     {
         $query = Client::query();
@@ -16,6 +18,10 @@ class ClientController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('poc_name', 'like', "%{$search}%")
+                    ->orWhere('company_type', 'like', "%{$search}%")
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%");
             });
         }
@@ -93,5 +99,27 @@ class ClientController extends Controller
     {
         $pdf = Pdf::loadView('clients.pdf', compact('client'));
         return $pdf->download('Client_Report_'.$client->name);
+    }
+
+    public function export()
+    {
+        $clients = Client::all();
+        $data = $clients->map(function ($client) {
+            return [
+                $client->name,
+                $client->email,
+                $client->phone,
+                $client->company_type,
+                $client->poc_name,
+                $client->city,
+                $client->address,
+                $client->location_url,
+                $client->created_at->toDateString(),
+            ];
+        });
+
+        $headers = ['Name', 'Email', 'Phone', 'Company_Type', 'POC Name', 'City', 'Address', 'Location URL', 'Created At'];
+
+        return $this->exportToCsv('clients.csv', $data, $headers);
     }
 }

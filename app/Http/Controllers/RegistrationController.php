@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Traits\ExportsCsv;
 
 class RegistrationController extends Controller
 {
+    use ExportsCsv;
     public function index(Client $client)
     {
         $registrations = $client->registrations()->latest()->paginate(10);
@@ -78,6 +80,23 @@ class RegistrationController extends Controller
 //        return redirect()->route('registrations.index', $client)->with('success', 'Registration deleted.');
     }
 
+    public function export()
+    {
+        $registrations = Registration::all();
+        $data = $registrations->map(function ($registration) {
+            return [
+                $registration->organization_name,
+                $registration->username,
+                $registration->password,
+                $registration->pin,
+            ];
+        });
+
+        $headers = ['Organization Name', 'User Name', 'Password', 'Pin'];
+
+        return $this->exportToCsv('registrations.csv', $data, $headers);
+    }
+
     private function authorizeClient(Client $client, Registration $registration)
     {
         abort_if($registration->client_id !== $client->id, 403);
@@ -96,9 +115,7 @@ class RegistrationController extends Controller
             'PRA',
             'PTA',
             'PSEB',
-            'SECP / CEO',
-            'SECP / Director',
-            'SECP/ Next of Kin',
+            'SECP',
             'SRA'
         ])->sort()->values();
     }

@@ -44,15 +44,20 @@
                 @endphp
                 <select name="status[]" id="status" class="form-select" multiple>
                     @foreach(['Upcoming', 'Overdue', 'Completed', 'Not Interested'] as $status)
-                        <option
-                            value="{{ $status }}" {{ in_array($status, $selectedStatuses, true) ? 'selected' : '' }}>
+                        <option value="{{ $status }}" {{ in_array($status, $selectedStatuses, true) ? 'selected' : '' }}>
                             {{ $status }}
                         </option>
                     @endforeach
                 </select>
                 <button type="submit" class="btn btn-outline-primary">Filter</button>
             </form>
+
+            <!-- Export Button -->
+            <a href="{{ route('renewals.export') }}" class="btn btn-success">
+                <i class="bi bi-download me-1"></i> Export Renewals
+            </a>
         </div>
+
 
     </div>
 

@@ -2,9 +2,14 @@
 <div class="card mb-4">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Registrations for {{ $client->name }}</h5>
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRegistrationModal">
-            <i class="fas fa-plus-circle me-1"></i> Add Registration
-        </button>
+        <div class="d-flex gap-2">
+            <a href="{{ route('registrations.export') }}" class="btn btn-outline-success" target="_blank">
+                <i class="fas fa-file-export me-1"></i> Export Registrations
+            </a>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRegistrationModal">
+                <i class="fas fa-plus-circle me-1"></i> Add Registration
+            </button>
+        </div>
     </div>
     <div class="card-body">
         @if ($errors->any())

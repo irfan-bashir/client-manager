@@ -13,6 +13,11 @@ Route::get('/', function () {
 
 
 Route::middleware('auth')->group(function () {
+    Route::get('/clients/export', [ClientController::class, 'export'])->name('clients.export');
+    Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
+    Route::get('/registrations/export', [RegistrationController::class, 'export'])->name('registrations.export');
+    Route::get('/renewals/export', [RenewalController::class, 'export'])->name('renewals.export');
+
     Route::get('/dashboard', [RenewalController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
     Route::resource('clients', ClientController::class);
@@ -31,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/renewals/{task}/update-status', [RenewalController::class, 'updateStatus'])->name('renewals.updateStatus');
 
     Route::get('/clients/{client}/pdf', [ClientController::class, 'generatePDF'])->name('clients.pdf');
+
 });
 
 

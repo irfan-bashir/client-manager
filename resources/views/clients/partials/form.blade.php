@@ -37,7 +37,7 @@
         <select name="company_type" id="company_type" class="form-select" required>
             <option value="">-- Select Company Type --</option>
             @foreach ([
-                'AOP', 'Individual', 'LLP', 'NGO', 'Other', 'POC Name',
+                'AOP', 'Individual', 'LLP', 'NGO', 'Other',
                 'Private Company', 'Public Limited', 'SMC Private', 'Sole/Business Individual'
             ] as $type)
                 <option value="{{ $type }}" {{ old('company_type', $client->company_type ?? '') == $type ? 'selected' : '' }}>

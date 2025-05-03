@@ -3,8 +3,16 @@
 <div class="card mb-4">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Tasks for {{ $client->name }}</h5>
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTaskModal">Add Task</button>
+        <div class="d-flex gap-2">
+            <a href="{{ route('tasks.export') }}" class="btn btn-outline-success" target="_blank">
+                <i class="fas fa-file-export me-1"></i> Export Tasks
+            </a>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+                <i class="fas fa-plus-circle me-1"></i> Add Task
+            </button>
+        </div>
     </div>
+
     <div class="card-body">
 
         @if ($errors->any())

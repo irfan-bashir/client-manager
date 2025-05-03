@@ -2,7 +2,12 @@
 
 @section('content')
     <div class="container">
-        <h2>Tasks for {{ $client->name }}</h2>
+        <div class="flex justify-between items-center mb-4">
+            <h2>Tasks for {{ $client->name }}</h2>
+            <a href="{{ route('tasks.export') }}" class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded" target="_blank">
+                Export CSV
+            </a>
+        </div>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

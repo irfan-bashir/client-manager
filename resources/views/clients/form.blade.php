@@ -41,7 +41,6 @@
                 'LLP',
                 'NGO',
                 'Other',
-                'POC Name',
                 'Private Company',
                 'Public Limited',
                 'SMC Private',
