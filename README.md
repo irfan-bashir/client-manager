@@ -1,61 +1,109 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel SaaS Platform – v1.0
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A lightweight, multi-tenant Laravel-based SaaS platform to manage **Clients**, **Registrations**, and **Tasks**, with built-in support for reminders, data exports, and subdomain separation.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🔥 Key Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 🧑‍💼 Clients Management (with Tabs for Tasks and Registrations)
+- 📝 Registrations with WhatsApp & Email Reminder Support
+- ✅ Tasks Tracking per Client
+- 🌐 Multi-tenant Architecture (subdomain support)
+- 📤 Export to CSV (Clients, Registrations, Tasks)
+- 🧠 Clean UI with Bootstrap-based design
+- 📅 Modal-based forms and full-page editing where needed
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📦 Release Notes – Version 1.0
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Release Date:** May 4, 2025  
+**Version:** 1.0.0  
+**Status:** Stable Production Release
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 🎯 Overview
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This marks the initial stable release (`v1.0`) of our **Laravel-based SaaS platform**, built with a focus on client management, task tracking, registration reminders, and multi-tenant support. The release includes core modules, user-friendly UI enhancements, and export/search functionalities.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 🚀 Major Features
 
-### Premium Partners
+#### 🧑‍💼 Clients Module
+- Full CRUD operations for clients.
+- “Add Client” available as a dedicated page.
+- Integrated tabbed layout with linked **Registrations** and **Tasks** views per client.
+- Clean Bootstrap-based UI with modals and full-page editing.
+- Export to CSV supported.
+- Search functionality with persistent input field.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+#### 📝 Registrations Module
+- Linked to clients, managed through tab interface.
+- Add/Edit via modal popup for fast interaction.
+- Export registrations as CSV.
+- Error/success messages styled using Bootstrap alerts.
+- Enhanced table layout with pagination and responsive design.
 
-## Contributing
+#### ✅ Tasks Module
+- Client-specific tasks managed via modals inside the client view.
+- Export tasks as CSV.
+- Add/Edit/Delete with intuitive interface and modal support.
+- UI refined with consistent button styles and icons.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### 🏷 Reminder Functionality
+- Automatic email reminders for expiring registrations.
+- WhatsApp message preview shown in a formatted popup.
+- Support for detailed and structured message templates.
 
-## Code of Conduct
+#### 🌐 Multi-Tenant Architecture
+- Subdomain-based tenant separation: `domain.com/client1`, `domain.com/client2`, etc.
+- Isolated data and views per tenant.
+- Middleware and route group adjustments for smooth segregation.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### 💄 UI/UX Improvements
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Bootstrap-based layout and components across all modules.
+- Export buttons redesigned with consistent positioning and icons.
+- Form layout issues resolved for mobile and desktop views.
+- Task and Registration modals embedded within Client tabs.
+- Improved spacing and alignment for better visual hierarchy.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 🛠 Technical Stack
+
+- **Backend:** Laravel
+- **Frontend:** Blade + Bootstrap
+- **Database:** MySQL
+- **Deployment:** Ready for shared or container-based hosting
+- **Export:** CSV exports for all major modules
+
+---
+
+### 🧪 Known Limitations
+
+- UI customization for mobile view can be further optimized.
+- Export limited to CSV format only (no Excel/PDF yet).
+- No user authentication layer (planned in v1.1).
+
+---
+
+### 📌 What's Next (Planned for v1.1)
+
+- Authentication and role-based access control.
+- Client-specific branding support.
+- PDF and Excel export options.
+- Dashboard analytics for task/registration trends.
+- Bulk registration uploads.
+
+---
+
+## 📂 Setup Instructions
+
+1. Clone the repository  
+   ```bash
+   git clone https://github.com/your-username/your-saas-project.git
+   cd your-saas-project
