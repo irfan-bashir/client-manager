@@ -6,6 +6,7 @@ use App\Mail\TaskReminderMail;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Traits\ExportsCsv;
 
@@ -28,6 +29,11 @@ class RenewalController extends Controller
         } else {
             $statusFilterToQuery = null;
         }
+        $statusCounts = Task::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
+        $totalCount = Task::count();
 
         $tasksQuery = Task::with(['registration.client'])
             ->when($statusFilterToQuery, fn($q) => $q->whereIn('status', $statusFilterToQuery))
@@ -54,6 +60,8 @@ class RenewalController extends Controller
 
         return view('renewals.index', [
             'tasks' => $tasks,
+            'statusCounts' => $statusCounts,
+            'totalCount' => $totalCount,
             'statusFilter' => $statusFilterForView,
         ]);
     }

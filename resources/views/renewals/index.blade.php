@@ -57,6 +57,34 @@
                 <i class="bi bi-download me-1"></i> Export Renewals
             </a>
         </div>
+        <div class="d-flex justify-content-center flex-wrap gap-3 mb-4">
+            <div class="card text-center border-primary" style="width: 140px;">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">All</h6>
+                    <h4 class="fw-bold text-primary">{{ $totalCount }}</h4>
+                </div>
+            </div>
+            @foreach(['Upcoming', 'Overdue', 'Completed', 'Not Interested'] as $status)
+                <div class="card text-center border-{{
+            $status === 'Upcoming' ? 'primary' :
+            ($status === 'Overdue' ? 'danger' :
+            ($status === 'Completed' ? 'success' : 'secondary'))
+        }}" style="width: 150px;">
+                    <div class="card-body">
+                        <h6 class="card-title text-muted">{{ $status }}</h6>
+                        <h4 class="fw-bold text-{{
+                    $status === 'Upcoming' ? 'primary' :
+                    ($status === 'Overdue' ? 'danger' :
+                    ($status === 'Completed' ? 'success' : 'secondary'))
+                }}">
+                            {{ $statusCounts[$status] ?? 0 }}
+                        </h4>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+
 
 
     </div>
