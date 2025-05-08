@@ -2,9 +2,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <title>{{ config('app.name', 'AB Consultants') }}</title>
+    <title>ALWARI Consultants – Empowering Your Financial Future with Strategic Insights and Tailored Solutions.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="https://abconsultants.pk/wp-content/uploads/2023/10/Untitled-1-2-e1698391157747.png">
+    <link rel="icon" href="https://abconsultants.com.pk/wp-content/uploads/2024/10/Alwari-new.png">
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
