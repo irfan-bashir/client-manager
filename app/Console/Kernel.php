@@ -14,8 +14,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // ⏰ This will run the reminder command daily
+        $schedule->command('tasks:update-statuses')->daily();
         $schedule->command('tasks:send-reminders')->daily();
-        $schedule->job(new UpdateTaskStatuses)->daily();
+//        $schedule->job(new UpdateTaskStatuses)->daily();
     }
 
     /**
