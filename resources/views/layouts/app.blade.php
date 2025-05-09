@@ -250,7 +250,7 @@
                 const footer = document.getElementById('clientModalFooter');
                 footer.innerHTML = isViewMode
                     ? ''
-                    : `<button type="button" class="btn btn-success" id="modalSaveButton">Save</button>`;
+                    : '';
 
                 const modal = new bootstrap.Modal(document.getElementById('clientModal'));
                 modal.show();
