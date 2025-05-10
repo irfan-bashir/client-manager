@@ -2,23 +2,28 @@
 
 namespace App\Console;
 
-use App\Jobs\UpdateTaskStatuses;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\UpdateTaskStatusesCommand;
+use App\Console\Commands\SendTaskReminders;
 
 class Kernel extends ConsoleKernel
 {
+    /**
+     * Register the Artisan commands for the application.
+     */
+    protected $commands = [
+        UpdateTaskStatusesCommand::class,
+        SendTaskReminders::class,
+    ];
+
     /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void
     {
-        // ⏰ This will run the reminder command daily
-//        $schedule->command('tasks:update-statuses')->daily();
         $schedule->command('tasks:update-statuses')->everyMinute();
         $schedule->command('tasks:send-reminders')->daily();
-
-//        $schedule->job(new UpdateTaskStatuses)->daily();
     }
 
     /**
