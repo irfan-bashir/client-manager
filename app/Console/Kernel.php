@@ -7,19 +7,24 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    /**
+     * Define the application's command schedule.
+     */
     protected function schedule(Schedule $schedule): void
     {
-        // ✅ Schedule your commands here
+        // Make sure the command is scheduled correctly
         $schedule->command('tasks:update-statuses')->everyMinute();
-        $schedule->command('tasks:send-reminders')->everyMinute();
     }
 
+    /**
+     * Register the commands for the application.
+     */
     protected function commands(): void
     {
-        // ✅ This loads your custom command classes automatically
+        // Auto-load all commands from the Commands directory
         $this->load(__DIR__ . '/Commands');
 
-        // ✅ Also loads console routes (optional, but standard)
+        // Load console routes
         require base_path('routes/console.php');
     }
 }
