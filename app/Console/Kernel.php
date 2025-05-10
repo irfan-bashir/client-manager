@@ -4,35 +4,22 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\UpdateTaskStatusesCommand;
-use App\Console\Commands\SendTaskReminders;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Register the Artisan commands for the application.
-     */
-    protected $commands = [
-        UpdateTaskStatusesCommand::class,
-        SendTaskReminders::class,
-    ];
-
-    /**
-     * Define the application's command schedule.
-     */
     protected function schedule(Schedule $schedule): void
     {
+        // ✅ Schedule your commands here
         $schedule->command('tasks:update-statuses')->everyMinute();
-        $schedule->command('tasks:send-reminders')->daily();
+        $schedule->command('tasks:send-reminders')->everyMinute();
     }
 
-    /**
-     * Register the commands for the application.
-     */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        // ✅ This loads your custom command classes automatically
+        $this->load(__DIR__ . '/Commands');
 
+        // ✅ Also loads console routes (optional, but standard)
         require base_path('routes/console.php');
     }
 }
