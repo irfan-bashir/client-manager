@@ -93,7 +93,7 @@
             </div>
 
             <div class="mt-3">
-                {{ $registrations->links('pagination::bootstrap-5') }}
+                {{ $registrations->withQueryString()->fragment('registrations')->links('pagination::bootstrap-5') }}
             </div>
         @endif
     </div>

@@ -115,7 +115,7 @@
             </div>
 
             <div class="mt-3">
-                {{ $tasks->links('pagination::bootstrap-5') }}
+                {{ $tasks->withQueryString()->fragment('tasks')->links('pagination::bootstrap-5') }}
             </div>
         @endif
     </div>
