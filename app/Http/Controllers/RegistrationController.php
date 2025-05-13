@@ -115,7 +115,9 @@ class RegistrationController extends Controller
             'PRA',
             'PTA',
             'PSEB',
-            'SECP',
+            'SECP / CEO',
+            'SECP / Director',
+            'SECP/ Next of Kin',
             'SRA'
         ])->sort()->values();
     }
