@@ -10,18 +10,25 @@
                 <label>Organization Name</label>
                 <select name="organization_name" class="form-control" required>
                     <option value="">Select</option>
-                    <option>SECP</option>
-                    <option>FBR</option>
-                    <option>PTA</option>
-                    <option>PEC</option>
-                    <option>Department of Tourism</option>
-                    <option>IPO</option>
-                    <option>PSEB</option>
-                    <option>Other</option>
-                    <option>KPRA</option>
-                    <option>SRA</option>
-                    <option>PRA</option>
                     <option>BRA</option>
+                    <option>Department of Tourism</option>
+                    <option>DRAP</option>
+                    <option>EPAD</option>
+                    <option>FBR</option>
+                    <option>ICCI</option>
+                    <option>IPO</option>
+                    <option>KPRA</option>
+                    <option>Other</option>
+                    <option>PEC</option>
+                    <option>PRA</option>
+                    <option>PSW</option>
+                    <option>PTA</option>
+                    <option>PSEB</option>
+                    <option>Punjab (AOP)</option>
+                    <option>SECP / CEO</option>
+                    <option>SECP / Director</option>
+                    <option>SECP/ Next of Kin</option>
+                    <option>SRA</option>
                 </select>
             </div>
 

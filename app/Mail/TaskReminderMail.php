@@ -29,7 +29,7 @@ class TaskReminderMail extends Mailable
             "Action Required:\n" .
             "Please ensure the form is completed at your earliest convenience to avoid any delays or penalties.\n" .
             "If the form has already been submitted, you may disregard this message.\n\n" .
-            "For any questions or support, feel free to contact us at sales.abcosnultants@gmail.com or +923365573186.\n\n" .
+            "For any questions or support, feel free to contact us at info@abconsultants.com.pk or +923365573186.\n\n" .
             "Thank you for your prompt attention.\n" .
             "Best regards,\n" .
             "AB Consultants";

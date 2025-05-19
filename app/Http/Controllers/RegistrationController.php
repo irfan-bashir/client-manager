@@ -105,20 +105,26 @@ class RegistrationController extends Controller
     private function getOrganizations()
     {
         return collect([
-            'BRA',
-            'Department of Tourism',
-            'FBR',
-            'IPO',
-            'KPRA',
-            'Other',
-            'PEC',
-            'PRA',
-            'PTA',
-            'PSEB',
-            'SECP / CEO',
-            'SECP / Director',
-            'SECP/ Next of Kin',
-            'SRA'
-        ])->sort()->values();
+                'BRA',
+                'Department of Tourism',
+                'DRAP',
+                'EPAD',
+                'FBR',
+                'ICCI',
+                'IPO',
+                'KPRA',
+                'Other',
+                'PEC',
+                'PRA',
+                'PSW',
+                'PTA',
+                'PSEB',
+                'Punjab (AOP)',
+                'SECP / CEO',
+                'SECP / Director',
+                'SECP/ Next of Kin',
+                'SRA'
+            ]
+        )->sort()->values();
     }
 }

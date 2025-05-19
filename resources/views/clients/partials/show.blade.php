@@ -115,7 +115,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($client->tasks as $task)
+            @foreach($client->tasks->sortBy('renewal_date') as $task)
                 @php
                     $color = match($task->status) {
                         'Completed' => 'success',

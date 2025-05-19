@@ -132,7 +132,8 @@
     <div class="company-info">
         <div class="company-name">AB Consultants</div>
         <div>www.abconsultants.com.pk</div>
-        <div>sales.abconsultants@gmail.com</div>
+        <div>info@abconsultants.com.pk</div>
+        <div>+923365573186</div>
     </div>
 </div>
 
@@ -198,7 +199,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($client->tasks as $task)
+        @foreach($client->tasks->sortBy('renewal_date') as $task)
             @php
                 $color = match($task->status) {
                     'Completed' => 'success',

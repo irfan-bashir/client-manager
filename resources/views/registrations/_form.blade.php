@@ -9,9 +9,27 @@
         <select name="organization_name" class="form-select" required>
             <option value="">-- Select Organization Name --</option>
             @foreach([
-                'BRA', 'Department of Tourism', 'FBR', 'IPO', 'KPRA', 'Other', 'PEC',
-                'PRA', 'PTA', 'PSEB', 'SECP / CEO', 'SECP / Director', 'SECP/ Next of Kin', 'SRA'
-            ] as $org)
+    'BRA',
+    'Department of Tourism',
+    'DRAP',
+    'EPAD',
+    'FBR',
+    'ICCI',
+    'IPO',
+    'KPRA',
+    'Other',
+    'PEC',
+    'PRA',
+    'PSW',
+    'PTA',
+    'PSEB',
+    'Punjab (AOP)',
+    'SECP / CEO',
+    'SECP / Director',
+    'SECP/ Next of Kin',
+    'SRA'
+]
+ as $org)
                 <option value="{{ $org }}" {{ old('organization_name', $registration->organization_name ?? '') === $org ? 'selected' : '' }}>
                     {{ $org }}
                 </option>
