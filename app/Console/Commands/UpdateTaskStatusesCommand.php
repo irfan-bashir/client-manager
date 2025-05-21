@@ -18,6 +18,7 @@ class UpdateTaskStatusesCommand extends Command
 
         Task::whereDate('renewal_date', '<', $now)
             ->where('status', '!=', 'Overdue')
+            ->whereNotIn('status', ['Completed', 'Not Interested'])
             ->update(['status' => 'Overdue']);
 
         Task::whereBetween('renewal_date', [$now, $twoWeeksFromNow])
