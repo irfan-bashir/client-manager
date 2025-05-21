@@ -69,9 +69,9 @@
                 <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg me-2">
                     <i class="bi bi-box-arrow-in-right me-1"></i>Login
                 </a>
-                <a href="{{ route('register') }}" class="btn btn-primary btn-lg">
+                <!-- <a href="{{ route('register') }}" class="btn btn-primary btn-lg">
                     <i class="bi bi-person-plus me-1"></i>Register
-                </a>
+                </a> -->
             @endauth
         </div>
     </div>
